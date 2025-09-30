@@ -7087,3 +7087,798 @@ The following settings have been applied:
 [2025.09.30-10.45.10:027][902]LogContentValidation: 	/Script/InputBlueprintNodes.EnhancedInputUserWidgetValidator
 [2025.09.30-10.45.10:027][902]AssetCheck: /Game/Prout/Server Validating asset
 [2025.09.30-10.45.16:093][357]LogUObjectHash: Compacting FUObjectHashTables data took   1.49ms
+[2025.09.30-10.46.17:219][370]LogUMGEditor: Disabling Slate Post Buffers for multi-window PIE session, currently not supported.
+[2025.09.30-10.46.17:220][370]LogPlayLevel: PlayLevel: No blueprints needed recompiling
+[2025.09.30-10.46.17:220][370]LogPlayLevel: Creating play world package: /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap
+[2025.09.30-10.46.17:228][370]LogPlayLevel: PIE: StaticDuplicateObject took: (0.008211s)
+[2025.09.30-10.46.17:229][370]LogPlayLevel: PIE: Created PIE world by copying editor world from /Game/VRTemplate/Maps/VRTemplateMap.VRTemplateMap to /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap (0.008249s)
+[2025.09.30-10.46.17:264][370]LogUObjectHash: Compacting FUObjectHashTables data took   2.16ms
+[2025.09.30-10.46.17:267][370]LogChaosDD: Creating Chaos Debug Draw Scene for world VRTemplateMap
+[2025.09.30-10.46.17:269][370]LogRenderer: SceneCulling instance hierarchy is disabled as UseNanite(PCD3D_SM6) returned false, for scene: 'World /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap'.
+[2025.09.30-10.46.17:269][370]LogPlayLevel: PIE: World Init took: (0.001972s)
+[2025.09.30-10.46.17:270][370]LogAudio: Display: Creating Audio Device:                 Id: 5, Scope: Unique, Realtime: True
+[2025.09.30-10.46.17:270][370]LogAudioMixer: Display: Audio Mixer Platform Settings:
+[2025.09.30-10.46.17:270][370]LogAudioMixer: Display: 	Sample Rate:						  48000
+[2025.09.30-10.46.17:270][370]LogAudioMixer: Display: 	Callback Buffer Frame Size Requested: 1024
+[2025.09.30-10.46.17:270][370]LogAudioMixer: Display: 	Callback Buffer Frame Size To Use:	  1024
+[2025.09.30-10.46.17:270][370]LogAudioMixer: Display: 	Number of buffers to queue:			  1
+[2025.09.30-10.46.17:270][370]LogAudioMixer: Display: 	Max Channels (voices):				  32
+[2025.09.30-10.46.17:270][370]LogAudioMixer: Display: 	Number of Async Source Workers:		  4
+[2025.09.30-10.46.17:270][370]LogAudio: Display: AudioDevice MaxSources: 32
+[2025.09.30-10.46.17:270][370]LogAudio: Display: Audio Spatialization Plugin: None (built-in).
+[2025.09.30-10.46.17:270][370]LogAudio: Display: Audio Reverb Plugin: None (built-in).
+[2025.09.30-10.46.17:270][370]LogAudio: Display: Audio Occlusion Plugin: None (built-in).
+[2025.09.30-10.46.17:272][370]LogAudioMixer: Display: Initializing audio mixer using platform API: 'XAudio2'
+[2025.09.30-10.46.17:286][370]LogAudioMixer: Display: Using Audio Hardware Device Haut-parleurs (Marantz SR7013 Stereo)
+[2025.09.30-10.46.17:287][370]LogAudioMixer: Display: Initializing Sound Submixes...
+[2025.09.30-10.46.17:287][370]LogAudioMixer: Display: Creating Master Submix 'MasterSubmixDefault'
+[2025.09.30-10.46.17:287][370]LogAudioMixer: Display: Creating Master Submix 'MasterReverbSubmixDefault'
+[2025.09.30-10.46.17:288][370]LogAudioMixer: FMixerPlatformXAudio2::StartAudioStream() called. InstanceID=5
+[2025.09.30-10.46.17:288][370]LogAudioMixer: Display: Output buffers initialized: Frames=1024, Channels=2, Samples=2048, InstanceID=5
+[2025.09.30-10.46.17:291][370]LogAudioMixer: Display: Starting AudioMixerPlatformInterface::RunInternal(), InstanceID=5
+[2025.09.30-10.46.17:291][370]LogAudioMixer: Display: FMixerPlatformXAudio2::SubmitBuffer() called for the first time. InstanceID=5
+[2025.09.30-10.46.17:291][370]LogInit: FAudioDevice initialized with ID 5.
+[2025.09.30-10.46.17:291][370]LogAudio: Display: Audio Device (ID: 5) registered with world 'VRTemplateMap'.
+[2025.09.30-10.46.17:291][370]LogAudioMixer: Initializing Audio Bus Subsystem for audio device with ID 5
+[2025.09.30-10.46.17:301][370]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2025.09.30-10.46.17:504][370]LogLoad: Game class is 'VRGameMode_C'
+[2025.09.30-10.46.17:507][370]LogText3D: Text3DActor : Text3DRenderer StaticMeshesRenderer Created
+[2025.09.30-10.46.17:508][370]LogWorld: Bringing World /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap up for play (max tick rate 0) at 2025.09.30-12.46.17
+[2025.09.30-10.46.17:512][370]LogOnline: OSS: Created online subsystem instance for: :Context_5
+[2025.09.30-10.46.17:512][370]LogWorld: Bringing up level for play took: 0.008055
+[2025.09.30-10.46.17:517][370]LogSlate: New Slate User Created. Platform User Id 8, User Index 8, Is Virtual User: 1
+[2025.09.30-10.46.17:523][370]LogSlate: Slate User Registered.  User Index 8, Is Virtual User: 1
+[2025.09.30-10.46.17:524][370]LogNet: ReplicationDriverClass is null! Not using ReplicationDriver.
+[2025.09.30-10.46.17:524][370]LogNetCore: DDoS detection status: detection enabled: 0 analytics enabled: 0
+[2025.09.30-10.46.17:524][370]LogPushModel: PushModel HandleCreation is now enabled
+[2025.09.30-10.46.17:524][370]LogNet: InitBase GameNetDriver (NetDriverDefinition GameNetDriver) using replication model Generic
+[2025.09.30-10.46.17:525][370]LogInit: WinSock: Socket queue. Rx: 131072 (config 131072) Tx: 131072 (config 131072)
+[2025.09.30-10.46.17:525][370]LogNet: Created socket for bind address: 0.0.0.0:17777
+[2025.09.30-10.46.17:525][370]PacketHandlerLog: Loaded PacketHandler component: Engine.EngineHandlerComponentFactory (StatelessConnectHandlerComponent)
+[2025.09.30-10.46.17:525][370]LogNet: Name:GameNetDriver Def:GameNetDriver IpNetDriver_2 IpNetDriver listening on port 17777
+[2025.09.30-10.46.17:527][370]xr.SecondaryScreenPercentage.HMDRenderTarget = "100"
+[2025.09.30-10.46.17:542][370]PIE: Server logged in
+[2025.09.30-10.46.17:553][370]PIE: Play in editor total start time 0,333 seconds.
+[2025.09.30-10.46.17:554][370]LogChaosDD: Creating Chaos Debug Draw Scene for world Untitled
+[2025.09.30-10.46.17:556][370]LogRenderer: SceneCulling instance hierarchy is disabled as UseNanite(PCD3D_SM6) returned false, for scene: 'World /Temp/Untitled_2.Untitled'.
+[2025.09.30-10.46.17:557][370]LogPlayLevel: PIE: World Init took: (0.002779s)
+[2025.09.30-10.46.17:558][370]LogAudio: Display: Creating Audio Device:                 Id: 6, Scope: Unique, Realtime: True
+[2025.09.30-10.46.17:558][370]LogAudioMixer: Display: Audio Mixer Platform Settings:
+[2025.09.30-10.46.17:558][370]LogAudioMixer: Display: 	Sample Rate:						  48000
+[2025.09.30-10.46.17:558][370]LogAudioMixer: Display: 	Callback Buffer Frame Size Requested: 1024
+[2025.09.30-10.46.17:558][370]LogAudioMixer: Display: 	Callback Buffer Frame Size To Use:	  1024
+[2025.09.30-10.46.17:558][370]LogAudioMixer: Display: 	Number of buffers to queue:			  1
+[2025.09.30-10.46.17:558][370]LogAudioMixer: Display: 	Max Channels (voices):				  32
+[2025.09.30-10.46.17:558][370]LogAudioMixer: Display: 	Number of Async Source Workers:		  4
+[2025.09.30-10.46.17:558][370]LogAudio: Display: AudioDevice MaxSources: 32
+[2025.09.30-10.46.17:558][370]LogAudio: Display: Audio Spatialization Plugin: None (built-in).
+[2025.09.30-10.46.17:558][370]LogAudio: Display: Audio Reverb Plugin: None (built-in).
+[2025.09.30-10.46.17:558][370]LogAudio: Display: Audio Occlusion Plugin: None (built-in).
+[2025.09.30-10.46.17:561][370]LogAudioMixer: Display: Initializing audio mixer using platform API: 'XAudio2'
+[2025.09.30-10.46.17:575][370]LogAudioMixer: Display: Using Audio Hardware Device Haut-parleurs (Marantz SR7013 Stereo)
+[2025.09.30-10.46.17:576][370]LogAudioMixer: Display: Initializing Sound Submixes...
+[2025.09.30-10.46.17:576][370]LogAudioMixer: Display: Creating Master Submix 'MasterSubmixDefault'
+[2025.09.30-10.46.17:576][370]LogAudioMixer: Display: Creating Master Submix 'MasterReverbSubmixDefault'
+[2025.09.30-10.46.17:576][370]LogAudioMixer: FMixerPlatformXAudio2::StartAudioStream() called. InstanceID=6
+[2025.09.30-10.46.17:576][370]LogAudioMixer: Display: Output buffers initialized: Frames=1024, Channels=2, Samples=2048, InstanceID=6
+[2025.09.30-10.46.17:579][370]LogAudioMixer: Display: Starting AudioMixerPlatformInterface::RunInternal(), InstanceID=6
+[2025.09.30-10.46.17:579][370]LogInit: FAudioDevice initialized with ID 6.
+[2025.09.30-10.46.17:579][370]LogAudioMixer: Display: FMixerPlatformXAudio2::SubmitBuffer() called for the first time. InstanceID=6
+[2025.09.30-10.46.17:579][370]LogAudio: Display: Audio Device (ID: 6) registered with world 'Untitled'.
+[2025.09.30-10.46.17:579][370]LogAudioMixer: Initializing Audio Bus Subsystem for audio device with ID 6
+[2025.09.30-10.46.17:601][370]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2025.09.30-10.46.17:601][370]LogGlobalStatus: UEngine::Browse Started Browse: "127.0.0.1:17777/Game/VRTemplate/Maps/VRTemplateMap"
+[2025.09.30-10.46.17:601][370]LogNet: Browse: 127.0.0.1:17777/Game/VRTemplate/Maps/VRTemplateMap
+[2025.09.30-10.46.17:601][370]LogPushModel: PushModel HandleCreation is now enabled
+[2025.09.30-10.46.17:601][370]LogNet: InitBase PendingNetDriver (NetDriverDefinition GameNetDriver) using replication model Generic
+[2025.09.30-10.46.17:602][370]LogInit: WinSock: Socket queue. Rx: 32768 (config 32768) Tx: 32768 (config 32768)
+[2025.09.30-10.46.17:602][370]LogNet: Created socket for bind address: 0.0.0.0:0
+[2025.09.30-10.46.17:602][370]LogNet: IpConnection_2 setting maximum channels to: 32767
+[2025.09.30-10.46.17:602][370]PacketHandlerLog: Loaded PacketHandler component: Engine.EngineHandlerComponentFactory (StatelessConnectHandlerComponent)
+[2025.09.30-10.46.17:602][370]LogHandshake: Stateless Handshake: NetDriverDefinition 'GameNetDriver' CachedClientID: 5
+[2025.09.30-10.46.17:602][370]LogNet: Game client on port 17777, rate 100000
+[2025.09.30-10.46.17:610][370]PIE: Client logged in
+[2025.09.30-10.46.17:621][370]PIE: Play in editor total start time 0,401 seconds.
+[2025.09.30-10.46.17:622][370]LogHMD: Warning: Input Action IA_Hand_Point_Right has a Description, "", which exactly matches the Description already used by Action IA_Hand_Point_Left.  Identical localized descriptions are not allowed by OpenXR.  The FName of this action IA_Hand_Point_Right, which is unique, will replace the localized string so that the input Action functions but it will not localize correctly.
+[2025.09.30-10.46.17:622][370]LogHMD: Warning: Input Action IA_Hand_ThumbUp_Left has a Description, "", which exactly matches the Description already used by Action IA_Hand_Point_Left.  Identical localized descriptions are not allowed by OpenXR.  The FName of this action IA_Hand_ThumbUp_Left, which is unique, will replace the localized string so that the input Action functions but it will not localize correctly.
+[2025.09.30-10.46.17:622][370]LogHMD: Warning: Input Action IA_Hand_ThumbUp_Right has a Description, "", which exactly matches the Description already used by Action IA_Hand_Point_Left.  Identical localized descriptions are not allowed by OpenXR.  The FName of this action IA_Hand_ThumbUp_Right, which is unique, will replace the localized string so that the input Action functions but it will not localize correctly.
+[2025.09.30-10.46.17:622][370]LogHMD: Warning: Input Action IA_Hand_Grasp_Left has a Description, "", which exactly matches the Description already used by Action IA_Hand_Point_Left.  Identical localized descriptions are not allowed by OpenXR.  The FName of this action IA_Hand_Grasp_Left, which is unique, will replace the localized string so that the input Action functions but it will not localize correctly.
+[2025.09.30-10.46.17:622][370]LogHMD: Warning: Input Action IA_Hand_Grasp_Right has a Description, "", which exactly matches the Description already used by Action IA_Hand_Point_Left.  Identical localized descriptions are not allowed by OpenXR.  The FName of this action IA_Hand_Grasp_Right, which is unique, will replace the localized string so that the input Action functions but it will not localize correctly.
+[2025.09.30-10.46.17:622][370]LogHMD: Warning: Input Action IA_Hand_IndexCurl_Left has a Description, "", which exactly matches the Description already used by Action IA_Hand_Point_Left.  Identical localized descriptions are not allowed by OpenXR.  The FName of this action IA_Hand_IndexCurl_Left, which is unique, will replace the localized string so that the input Action functions but it will not localize correctly.
+[2025.09.30-10.46.17:622][370]LogHMD: Warning: Input Action IA_Hand_IndexCurl_Right has a Description, "", which exactly matches the Description already used by Action IA_Hand_Point_Left.  Identical localized descriptions are not allowed by OpenXR.  The FName of this action IA_Hand_IndexCurl_Right, which is unique, will replace the localized string so that the input Action functions but it will not localize correctly.
+[2025.09.30-10.46.17:622][370]LogHMD: Warning: Input Mapping Context IMC_Menu has a Description, "", which exactly matches the Description already used by Input Mapping Context IMC_Hands.  Identical localized descriptions are not allowed by OpenXR.  The FName of this mapping context IMC_Menu, which is unique, will replace the duplicated localized string so the Input Mapping Context functions but it will not localize correctly.
+[2025.09.30-10.46.17:622][370]LogHMD: Warning: Input Action IA_Menu_Interact_Right_Pressed has a Description, "", which exactly matches the Description already used by Action IA_Menu_Interact_Left_Pressed.  Identical localized descriptions are not allowed by OpenXR.  The FName of this action IA_Menu_Interact_Right_Pressed, which is unique, will replace the localized string so that the input Action functions but it will not localize correctly.
+[2025.09.30-10.46.17:622][370]LogHMD: Warning: Input Action IA_Menu_Cursor_Left has a Description, "", which exactly matches the Description already used by Action IA_Menu_Interact_Left_Pressed.  Identical localized descriptions are not allowed by OpenXR.  The FName of this action IA_Menu_Cursor_Left, which is unique, will replace the localized string so that the input Action functions but it will not localize correctly.
+[2025.09.30-10.46.17:622][370]LogHMD: Warning: Input Action IA_Menu_Cursor_Right has a Description, "", which exactly matches the Description already used by Action IA_Menu_Interact_Left_Pressed.  Identical localized descriptions are not allowed by OpenXR.  The FName of this action IA_Menu_Cursor_Right, which is unique, will replace the localized string so that the input Action functions but it will not localize correctly.
+[2025.09.30-10.46.17:622][370]LogHMD: Warning: Input Mapping Context IMC_Weapon_Left has a Description, "", which exactly matches the Description already used by Input Mapping Context IMC_Hands.  Identical localized descriptions are not allowed by OpenXR.  The FName of this mapping context IMC_Weapon_Left, which is unique, will replace the duplicated localized string so the Input Mapping Context functions but it will not localize correctly.
+[2025.09.30-10.46.17:622][370]LogHMD: Warning: Input Mapping Context IMC_Weapon_Right has a Description, "", which exactly matches the Description already used by Input Mapping Context IMC_Hands.  Identical localized descriptions are not allowed by OpenXR.  The FName of this mapping context IMC_Weapon_Right, which is unique, will replace the duplicated localized string so the Input Mapping Context functions but it will not localize correctly.
+[2025.09.30-10.46.17:699][370]LogHMD: Warning: Requesting 10 bit swapchain, but not supported: fall back to 8bpc
+[2025.09.30-10.46.17:969][379]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.17:969][379]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.18:191][387]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.18:191][387]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.18:191][387]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.18:413][395]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.18:413][395]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.18:413][395]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.18:621][402]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.18:621][402]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.18:621][402]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.18:648][403]LogNet: NotifyAcceptingConnection accepted from: 127.0.0.1:63088
+[2025.09.30-10.46.18:648][403]LogHandshake: SendConnectChallenge. Timestamp: 1.456972, Cookie: 028232099086169215130136188206139179226114194157241061095085
+[2025.09.30-10.46.18:649][403]LogHandshake: Cached server SessionID: 0
+[2025.09.30-10.46.18:649][403]LogHandshake: SendChallengeResponse. Timestamp: 1.456972, Cookie: 028232099086169215130136188206139179226114194157241061095085
+[2025.09.30-10.46.18:675][404]LogNet: NotifyAcceptingConnection accepted from: 127.0.0.1:63088
+[2025.09.30-10.46.18:675][404]LogHandshake: SendChallengeAck. InCookie: 028232099086169215130136188206139179226114194157241061095085
+[2025.09.30-10.46.18:675][404]LogNet: Server accepting post-challenge connection from: 127.0.0.1:63088
+[2025.09.30-10.46.18:675][404]LogNet: IpConnection_3 setting maximum channels to: 32767
+[2025.09.30-10.46.18:676][404]PacketHandlerLog: Loaded PacketHandler component: Engine.EngineHandlerComponentFactory (StatelessConnectHandlerComponent)
+[2025.09.30-10.46.18:676][404]LogNet: NotifyAcceptedConnection: Name: VRTemplateMap, TimeStamp: 09/30/25 12:46:18, [UNetConnection] RemoteAddr: 127.0.0.1:63088, Name: IpConnection_3, Driver: Name:GameNetDriver Def:GameNetDriver IpNetDriver_2, IsServer: YES, PC: NULL, Owner: NULL, UniqueId: INVALID
+[2025.09.30-10.46.18:676][404]LogNet: AddClientConnection: Added client connection: [UNetConnection] RemoteAddr: 127.0.0.1:63088, Name: IpConnection_3, Driver: Name:GameNetDriver Def:GameNetDriver IpNetDriver_2, IsServer: YES, PC: NULL, Owner: NULL, UniqueId: INVALID
+[2025.09.30-10.46.18:677][404]LogNet: UPendingNetGame::SendInitialJoin: Sending hello. [UNetConnection] RemoteAddr: 127.0.0.1:17777, Name: IpConnection_2, Driver: Name:PendingNetDriver Def:GameNetDriver IpNetDriver_3, IsServer: NO, PC: NULL, Owner: NULL, UniqueId: INVALID
+[2025.09.30-10.46.18:703][405]LogNet: NotifyAcceptingChannel Control 0 server World /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap: Accepted
+[2025.09.30-10.46.18:703][405]LogNet: Remote platform little endian=1
+[2025.09.30-10.46.18:703][405]LogNet: This platform little endian=1
+[2025.09.30-10.46.18:707][405]LogOnline: OSS: Created online subsystem instance for: :Context_6
+[2025.09.30-10.46.18:731][406]LogNet: Login request: ?Name=DESKTOP-EKD5DOP-02335318432DD19DAC9C2A89E58230D5 userId: NULL:DESKTOP-EKD5DOP-02335318432DD19DAC9C2A89E58230D5 platform: NULL
+[2025.09.30-10.46.18:733][406]LogNet: Welcomed by server (Level: /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap, Game: /Game/VRTemplate/Blueprints/VRGameMode.VRGameMode_C)
+[2025.09.30-10.46.18:733][406]LogLoad: LoadMap: 127.0.0.1:17777/Game/VRTemplate/Maps/VRTemplateMap?game=/Game/VRTemplate/Blueprints/VRGameMode.VRGameMode_C
+[2025.09.30-10.46.18:733][406]LogWorld: BeginTearingDown for /Temp/Untitled_2
+[2025.09.30-10.46.18:733][406]LogWorld: UWorld::CleanupWorld for Untitled, bSessionEnded=true, bCleanupResources=true
+[2025.09.30-10.46.18:733][406]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2025.09.30-10.46.18:768][406]LogAudio: Display: Audio Device unregistered from world 'None'.
+[2025.09.30-10.46.18:771][406]LogUObjectHash: Compacting FUObjectHashTables data took   1.94ms
+[2025.09.30-10.46.18:779][406]LogAudio: Display: Audio Device (ID: 6) registered with world 'VRTemplateMap'.
+[2025.09.30-10.46.18:779][406]LogChaosDD: Creating Chaos Debug Draw Scene for world VRTemplateMap
+[2025.09.30-10.46.18:781][406]LogRenderer: SceneCulling instance hierarchy is disabled as UseNanite(PCD3D_SM6) returned false, for scene: 'World /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap'.
+[2025.09.30-10.46.18:781][406]LogPlayLevel: PIE: World Init took: (0.001587s)
+[2025.09.30-10.46.18:782][406]LogText3D: Text3DActor : Text3DRenderer StaticMeshesRenderer Created
+[2025.09.30-10.46.18:783][406]LogWorld: Bringing World /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap up for play (max tick rate 0) at 2025.09.30-12.46.18
+[2025.09.30-10.46.18:784][406]LogWorld: Bringing up level for play took: 0.002480
+[2025.09.30-10.46.18:784][406]LogLoad: Took 0.051811 seconds to LoadMap(/Game/VRTemplate/Maps/VRTemplateMap)
+[2025.09.30-10.46.18:785][406]LogGlobalStatus: UEngine::LoadMap Load map complete /Game/VRTemplate/Maps/VRTemplateMap
+[2025.09.30-10.46.18:785][406]LogGlobalStatus: UPendingNetGame::TravelCompleted Pending net game travel completed
+[2025.09.30-10.46.18:813][407]LogNet: Client netspeed is 100000
+[2025.09.30-10.46.18:813][407]LogNet: Join request: /Game/VRTemplate/Maps/VRTemplateMap?Name=DESKTOP-EKD5DOP-02335318432DD19DAC9C2A89E58230D5?SplitscreenCount=1
+[2025.09.30-10.46.18:815][407]xr.SecondaryScreenPercentage.HMDRenderTarget = "100"
+[2025.09.30-10.46.18:815][407]LogNet: Join succeeded: DESKTOP-EKD5DOP-0233
+[2025.09.30-10.46.18:870][408]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.18:870][408]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.18:870][408]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.18:874][408]xr.SecondaryScreenPercentage.HMDRenderTarget = "100"
+[2025.09.30-10.46.18:875][408]xr.SecondaryScreenPercentage.HMDRenderTarget = "100"
+[2025.09.30-10.46.19:080][415]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.19:080][415]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.19:080][415]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.19:251][421]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.19:251][421]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.19:305][423]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.19:305][423]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.19:305][423]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.19:447][428]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.19:447][428]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.19:447][428]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.19:528][431]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.19:528][431]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.19:528][431]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.19:669][436]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.19:669][436]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.19:669][436]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.19:752][439]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.19:752][439]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.19:752][439]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.19:892][444]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.19:892][444]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.19:892][444]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.19:975][447]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.19:975][447]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.19:975][447]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.20:114][452]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.20:114][452]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.20:115][452]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.20:197][455]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.20:197][455]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.20:197][455]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.20:338][460]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.20:338][460]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.20:338][460]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.20:420][463]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.20:420][463]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.20:420][463]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.20:561][468]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.20:561][468]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.20:561][468]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.20:643][471]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.20:643][471]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.20:643][471]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.20:783][476]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.20:783][476]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.20:783][476]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.20:865][479]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.20:865][479]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.20:865][479]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.21:006][484]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.21:006][484]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.21:006][484]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.21:088][487]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.21:088][487]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.21:088][487]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.21:229][492]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.21:229][492]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.21:229][492]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.21:311][495]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.21:311][495]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.21:311][495]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.21:451][500]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.21:451][500]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.21:451][500]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.21:534][503]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.21:534][503]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.21:534][503]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.21:673][508]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.21:673][508]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.21:673][508]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.21:757][511]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.21:757][511]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.21:757][511]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.21:896][516]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.21:896][516]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.21:896][516]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.21:979][519]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.21:979][519]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.21:979][519]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.22:119][524]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.22:119][524]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.22:119][524]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.22:201][527]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.22:201][527]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.22:201][527]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.22:341][532]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.22:341][532]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.22:341][532]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.22:424][535]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.22:424][535]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.22:424][535]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.22:564][540]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.22:564][540]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.22:564][540]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.22:647][543]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.22:647][543]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.22:647][543]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.22:787][548]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.22:787][548]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.22:787][548]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.22:869][551]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.22:869][551]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.22:869][551]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.23:010][556]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.23:010][556]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.23:010][556]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.23:091][559]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.23:091][559]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.23:091][559]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.23:232][564]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.23:232][564]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.23:232][564]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.23:313][567]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.23:313][567]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.23:313][567]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.23:454][572]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.23:454][572]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.23:454][572]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.23:536][575]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.23:536][575]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.23:536][575]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.23:675][580]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.23:675][580]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.23:675][580]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.23:758][583]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.23:758][583]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.23:758][583]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.23:899][588]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.23:899][588]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.23:899][588]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.23:981][591]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.23:981][591]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.23:981][591]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.24:122][596]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.24:122][596]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.24:122][596]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.24:203][599]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.24:203][599]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.24:203][599]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.24:343][604]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.24:343][604]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.24:343][604]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.24:425][607]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.24:425][607]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.24:425][607]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.24:565][612]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.24:565][612]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.24:565][612]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.24:648][615]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.24:648][615]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.24:648][615]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.24:788][620]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.24:788][620]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.24:788][620]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.24:868][623]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.24:868][623]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.24:868][623]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.25:008][628]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.25:008][628]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.25:008][628]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.25:091][631]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.25:091][631]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.25:091][631]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.25:232][636]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.25:232][636]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.25:232][636]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.25:314][639]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.25:314][639]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.25:314][639]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.25:453][644]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.25:453][644]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.25:453][644]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.25:536][647]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.25:536][647]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.25:536][647]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.25:675][652]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.25:675][652]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.25:675][652]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.25:757][655]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.25:757][655]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.25:758][655]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.25:897][660]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.25:897][660]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.25:897][660]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.25:979][663]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.25:979][663]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.25:979][663]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.26:120][668]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.26:120][668]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.26:120][668]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.26:202][671]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.26:202][671]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.26:202][671]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.26:342][676]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.26:342][676]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.26:342][676]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.26:424][679]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.26:424][679]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.26:424][679]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.26:564][684]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.26:564][684]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.26:564][684]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.26:647][687]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.26:647][687]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.26:647][687]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.26:786][692]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.26:786][692]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.26:786][692]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.26:870][695]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.26:870][695]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.26:870][695]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.27:009][700]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.27:009][700]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.27:009][700]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.27:091][703]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.27:091][703]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.27:091][703]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.27:232][708]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.27:232][708]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.27:232][708]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.27:314][711]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.27:314][711]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.27:314][711]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.27:453][716]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.27:453][716]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.27:453][716]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.27:536][719]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.27:536][719]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.27:536][719]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.27:676][724]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.27:676][724]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.27:676][724]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.27:758][727]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.27:758][727]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.27:758][727]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.27:898][732]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.27:898][732]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.27:898][732]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.27:981][735]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.27:981][735]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.27:981][735]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.28:121][740]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.28:121][740]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.28:121][740]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.28:202][743]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.28:202][743]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.28:202][743]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.28:343][748]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.28:343][748]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.28:343][748]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.28:426][751]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.28:426][751]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.28:426][751]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.28:565][756]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.28:565][756]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.28:565][756]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.28:647][759]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.28:647][759]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.28:647][759]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.28:789][764]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.28:789][764]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.28:789][764]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.28:870][767]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.28:870][767]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.28:870][767]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.29:010][772]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.29:010][772]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.29:010][772]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.29:093][775]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.29:093][775]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.29:093][775]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.29:233][780]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.29:233][780]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.29:233][780]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.29:314][783]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.29:314][783]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.29:314][783]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.29:455][788]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.29:455][788]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.29:455][788]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.29:537][791]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.29:537][791]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.29:537][791]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.29:676][796]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.29:676][796]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.29:676][796]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.29:758][799]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.29:758][799]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.29:758][799]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.29:898][804]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.29:898][804]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.29:898][804]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.29:979][807]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.29:979][807]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.29:979][807]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.30:120][812]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.30:120][812]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.30:120][812]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.30:202][815]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.30:202][815]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.30:202][815]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.30:341][820]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.30:341][820]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.30:341][820]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.30:425][823]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.30:425][823]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.30:425][823]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.30:564][828]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.30:564][828]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.30:564][828]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.30:646][831]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.30:646][831]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.30:646][831]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.30:785][836]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.30:785][836]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.30:785][836]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.30:868][839]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.30:868][839]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.30:868][839]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.31:007][844]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.31:007][844]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.31:007][844]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.31:090][847]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.31:090][847]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.31:090][847]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.31:231][852]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.31:231][852]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.31:231][852]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.31:313][855]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.31:314][855]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.31:314][855]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.31:453][860]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.31:453][860]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.31:453][860]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.31:535][863]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.31:536][863]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.31:536][863]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.31:675][868]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.31:675][868]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.31:675][868]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.31:757][871]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.31:757][871]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.31:757][871]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.31:897][876]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.31:897][876]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.31:897][876]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.31:979][879]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.31:979][879]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.31:979][879]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.32:119][884]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.32:119][884]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.32:119][884]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.32:201][887]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.32:202][887]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.32:202][887]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.32:341][892]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.32:341][892]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.32:341][892]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.32:424][895]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.32:424][895]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.32:424][895]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.32:563][900]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.32:563][900]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.32:563][900]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.32:646][903]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.32:646][903]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.32:646][903]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.32:786][908]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.32:786][908]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.32:786][908]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.32:869][911]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.32:869][911]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.32:869][911]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.33:009][916]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.33:009][916]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.33:009][916]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.33:090][919]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.33:091][919]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.33:091][919]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.33:231][924]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.33:231][924]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.33:231][924]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.33:313][927]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.33:313][927]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.33:313][927]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.33:453][932]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.33:454][932]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.33:454][932]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.33:534][935]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.33:534][935]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.33:535][935]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.33:675][940]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.33:675][940]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.33:675][940]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.33:757][943]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.33:757][943]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.33:757][943]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.33:896][948]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.33:896][948]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.33:896][948]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.33:980][951]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.33:980][951]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.33:980][951]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.34:120][956]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.34:121][956]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.34:121][956]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.34:202][959]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.34:202][959]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.34:202][959]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.34:342][964]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.34:342][964]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.34:342][964]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.34:425][967]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.34:425][967]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.34:425][967]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.34:564][972]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.34:564][972]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.34:564][972]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.34:647][975]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.34:647][975]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.34:647][975]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.34:787][980]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.34:787][980]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.34:787][980]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.34:869][983]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.34:869][983]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.34:869][983]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.35:008][988]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.35:008][988]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.35:008][988]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.35:091][991]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.35:091][991]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.35:091][991]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.35:233][996]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.35:233][996]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.35:233][996]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.35:313][999]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.35:313][999]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.35:313][999]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.35:454][  4]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.35:454][  4]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.35:454][  4]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.35:536][  7]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.35:536][  7]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.35:536][  7]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.35:676][ 12]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.35:676][ 12]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.35:676][ 12]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.35:757][ 15]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.35:758][ 15]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.35:758][ 15]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.35:898][ 20]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.35:898][ 20]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.35:898][ 20]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.35:981][ 23]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.35:981][ 23]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.35:981][ 23]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.36:120][ 28]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.36:120][ 28]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.36:120][ 28]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.36:203][ 31]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.36:203][ 31]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.36:203][ 31]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.36:342][ 36]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.36:342][ 36]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.36:342][ 36]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.36:425][ 39]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.36:425][ 39]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.36:425][ 39]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.36:564][ 44]LogBlueprintUserMessages: [Server_C_1] Client 1: je cherche
+[2025.09.30-10.46.36:564][ 44]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.36:564][ 44]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.36:647][ 47]LogBlueprintUserMessages: [Server_C_1] Server: je cherche
+[2025.09.30-10.46.36:647][ 47]LogScript: Warning: Script Msg: FindSessions - Invalid player state
+[2025.09.30-10.46.36:647][ 47]LogScript: Warning: Script Msg called by: Server_C /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap.VRTemplateMap:PersistentLevel.Server_C_1
+[2025.09.30-10.46.36:820][ 51]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2025.09.30-10.46.36:820][ 51]LogWorld: BeginTearingDown for /Game/VRTemplate/Maps/UEDPIE_1_VRTemplateMap
+[2025.09.30-10.46.36:820][ 51]LogCrowdFollowing: Warning: Unable to find RecastNavMesh instance while trying to create UCrowdManager instance
+[2025.09.30-10.46.36:820][ 51]LogSlate: Window 'TestRezo Preview [NetMode: Client 1]  (64-bit/PC D3D SM6)' being destroyed
+[2025.09.30-10.46.36:826][ 51]LogWorld: UWorld::CleanupWorld for VRTemplateMap, bSessionEnded=true, bCleanupResources=true
+[2025.09.30-10.46.36:826][ 51]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2025.09.30-10.46.36:827][ 51]LogNet: World NetDriver shutdown IpNetDriver_3 [GameNetDriver]
+[2025.09.30-10.46.36:828][ 51]LogNet: DestroyNamedNetDriver: Name:GameNetDriver Def:GameNetDriver IpNetDriver_3 
+[2025.09.30-10.46.36:828][ 51]LogNet: UNetConnection::Close: [UNetConnection] RemoteAddr: 127.0.0.1:17777, Name: IpConnection_2, Driver: Name:GameNetDriver Def:GameNetDriver IpNetDriver_3, IsServer: NO, PC: PlayerController_1, Owner: PlayerController_1, UniqueId: NULL:DESKTOP-EKD5DOP-02335318432DD19DAC9C2A89E58230D5, Channels: 11, Time: 2025.09.30-10.46.36
+[2025.09.30-10.46.36:828][ 51]LogNet: UChannel::Close: Sending CloseBunch. ChIndex == 0. Name: [UChannel] ChIndex: 0, Closing: 0 [UNetConnection] RemoteAddr: 127.0.0.1:17777, Name: IpConnection_2, Driver: Name:GameNetDriver Def:GameNetDriver IpNetDriver_3, IsServer: NO, PC: PlayerController_1, Owner: PlayerController_1, UniqueId: NULL:DESKTOP-EKD5DOP-02335318432DD19DAC9C2A89E58230D5
+[2025.09.30-10.46.36:828][ 51]LogExit: Name:GameNetDriver Def:GameNetDriver IpNetDriver_3 shut down
+[2025.09.30-10.46.36:828][ 51]LogWorld: BeginTearingDown for /Game/VRTemplate/Maps/UEDPIE_0_VRTemplateMap
+[2025.09.30-10.46.36:828][ 51]LogCrowdFollowing: Warning: Unable to find RecastNavMesh instance while trying to create UCrowdManager instance
+[2025.09.30-10.46.36:828][ 51]LogOnlineSession: Warning: OSS: Player DESKTOP-EKD5DOP-2D3CEE2E48980D340DAF6DB18AE36598 is not part of session (GameSession)
+[2025.09.30-10.46.36:828][ 51]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2025.09.30-10.46.36:929][ 51]LogSlate: Window 'TestRezo Preview [NetMode: Server 0]  (64-bit/PC D3D SM6) OpenXR Oculus (1.111.0)' being destroyed
+[2025.09.30-10.46.36:933][ 51]LogWorld: UWorld::CleanupWorld for VRTemplateMap, bSessionEnded=true, bCleanupResources=true
+[2025.09.30-10.46.36:934][ 51]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2025.09.30-10.46.36:935][ 51]LogNet: World NetDriver shutdown IpNetDriver_2 [GameNetDriver]
+[2025.09.30-10.46.36:935][ 51]LogNet: DestroyNamedNetDriver: Name:GameNetDriver Def:GameNetDriver IpNetDriver_2 
+[2025.09.30-10.46.36:935][ 51]LogNet: UNetConnection::SendCloseReason:
+[2025.09.30-10.46.36:935][ 51]LogNet:  - Result=HostClosedConnection, ErrorContext="HostClosedConnection"
+[2025.09.30-10.46.36:935][ 51]LogNet: UNetConnection::Cleanup: Closing open connection. [UNetConnection] RemoteAddr: 127.0.0.1:63088, Name: IpConnection_3, Driver: Name:GameNetDriver Def:GameNetDriver IpNetDriver_2, IsServer: YES, PC: PlayerController_1, Owner: PlayerController_1, UniqueId: NULL:DESKTOP-EKD5DOP-02335318432DD19DAC9C2A89E58230D5
+[2025.09.30-10.46.36:935][ 51]LogNet: UNetConnection::Close: [UNetConnection] RemoteAddr: 127.0.0.1:63088, Name: IpConnection_3, Driver: Name:GameNetDriver Def:GameNetDriver IpNetDriver_2, IsServer: YES, PC: PlayerController_1, Owner: PlayerController_1, UniqueId: NULL:DESKTOP-EKD5DOP-02335318432DD19DAC9C2A89E58230D5, Channels: 11, Time: 2025.09.30-10.46.36
+[2025.09.30-10.46.36:935][ 51]LogNet: UNetConnection::SendCloseReason:
+[2025.09.30-10.46.36:935][ 51]LogNet:  - Result=Cleanup, ErrorContext="Cleanup"
+[2025.09.30-10.46.36:935][ 51]LogNet: UChannel::Close: Sending CloseBunch. ChIndex == 0. Name: [UChannel] ChIndex: 0, Closing: 0 [UNetConnection] RemoteAddr: 127.0.0.1:63088, Name: IpConnection_3, Driver: Name:GameNetDriver Def:GameNetDriver IpNetDriver_2, IsServer: YES, PC: PlayerController_1, Owner: PlayerController_1, UniqueId: NULL:DESKTOP-EKD5DOP-02335318432DD19DAC9C2A89E58230D5
+[2025.09.30-10.46.36:936][ 51]LogNet: UNetDriver::RemoveClientConnection - Removed address 127.0.0.1:63088 from MappedClientConnections for: [UNetConnection] RemoteAddr: 127.0.0.1:63088, Name: IpConnection_3, Driver: Name:GameNetDriver Def:GameNetDriver IpNetDriver_2, IsServer: YES, PC: PlayerController_1, Owner: PlayerController_1, UniqueId: NULL:DESKTOP-EKD5DOP-02335318432DD19DAC9C2A89E58230D5
+[2025.09.30-10.46.36:936][ 51]LogExit: Name:GameNetDriver Def:GameNetDriver IpNetDriver_2 shut down
+[2025.09.30-10.46.36:936][ 51]LogPlayLevel: Display: Shutting down PIE online subsystems
+[2025.09.30-10.46.36:946][ 51]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2025.09.30-10.46.36:994][ 51]LogText3D: Text3DActor : Text3DRenderer StaticMeshesRenderer Destroyed
+[2025.09.30-10.46.36:995][ 51]LogAudioMixer: Deinitializing Audio Bus Subsystem for audio device with ID 6
+[2025.09.30-10.46.36:995][ 51]LogAudioMixer: Display: FMixerPlatformXAudio2::StopAudioStream() called. InstanceID=6, StreamState=4
+[2025.09.30-10.46.36:997][ 51]LogAudioMixer: Display: FMixerPlatformXAudio2::StopAudioStream() called. InstanceID=6, StreamState=2
+[2025.09.30-10.46.37:001][ 51]LogText3D: Text3DActor : Text3DRenderer StaticMeshesRenderer Destroyed
+[2025.09.30-10.46.37:001][ 51]LogAudioMixer: Deinitializing Audio Bus Subsystem for audio device with ID 5
+[2025.09.30-10.46.37:002][ 51]LogAudioMixer: Display: FMixerPlatformXAudio2::StopAudioStream() called. InstanceID=5, StreamState=4
+[2025.09.30-10.46.37:003][ 51]LogAudioMixer: Display: FMixerPlatformXAudio2::StopAudioStream() called. InstanceID=5, StreamState=2
+[2025.09.30-10.46.37:011][ 51]LogSlate: Slate User Unregistered.  User Index 8
+[2025.09.30-10.46.37:011][ 51]LogSlate: Slate User Destroyed.  User Index 8, Is Virtual User: 1
+[2025.09.30-10.46.37:013][ 51]LogUObjectHash: Compacting FUObjectHashTables data took   1.36ms
+[2025.09.30-10.46.37:066][ 52]LogPlayLevel: Display: Destroying online subsystem :Context_6
+[2025.09.30-10.46.37:068][ 52]LogPlayLevel: Display: Destroying online subsystem :Context_5
+[2025.09.30-10.47.06:774][338]LogText3D: Text3D Engine Subsystem is clearing unreferenced cached fonts and typefaces.
+[2025.09.30-10.48.22:998][863]LogEOSSDK: LogEOS: Updating Product SDK Config, Time: 680.086792
+[2025.09.30-10.48.23:131][873]LogEOSSDK: LogEOS: SDK Config Product Update Request Completed - No Change
+[2025.09.30-10.48.23:131][873]LogEOSSDK: LogEOS: ScheduleNextSDKConfigDataUpdate - Time: 680.205811, Update Interval: 328.918732
+[2025.09.30-10.50.33:674][859]LogUObjectHash: Compacting FUObjectHashTables data took   2.00ms
+[2025.09.30-10.50.33:675][859]LogFileHelpers: Editor autosave (incl. external actors) for '/Game/VRTemplate/Maps/VRTemplateMap' took 0.039
+[2025.09.30-10.50.33:676][859]OBJ SavePackage: Generating thumbnails for [0] asset(s) in package [/Game/Prout/Server] ([2] browsable assets)...
+[2025.09.30-10.50.33:676][859]OBJ SavePackage: Finished generating thumbnails for package [/Game/Prout/Server]
+[2025.09.30-10.50.33:676][859]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Prout/Server" FILE="../../../../../DevMain/Unreal/TestRezo/TestRezo/Saved/Autosaves/Game/Prout/Server_Auto1.uasset" SILENT=false AUTOSAVING=true
+[2025.09.30-10.50.33:685][859]LogSavePackage: Moving output files for package: /Temp/Autosaves/Game/Prout/Server_Auto1
+[2025.09.30-10.50.33:686][859]LogSavePackage: Moving '../../../../../DevMain/Unreal/TestRezo/TestRezo/Saved/Server_Auto1A3D1F7BE428F75235FB068BEC82A8418.tmp' to '../../../../../DevMain/Unreal/TestRezo/TestRezo/Saved/Autosaves/Game/Prout/Server_Auto1.uasset'
+[2025.09.30-10.50.33:686][859]LogFileHelpers: Auto-saving content packages took 0.011
+[2025.09.30-10.53.59:764][ 63]LogEOSSDK: LogEOS: Updating Product SDK Config, Time: 1016.852356
+[2025.09.30-10.53.59:890][ 74]LogEOSSDK: LogEOS: SDK Config Product Update Request Completed - No Change
+[2025.09.30-10.53.59:890][ 74]LogEOSSDK: LogEOS: ScheduleNextSDKConfigDataUpdate - Time: 1016.966919, Update Interval: 340.169067
+[2025.09.30-10.54.49:709][ 17]LogUObjectHash: Compacting FUObjectHashTables data took   1.43ms
+[2025.09.30-10.54.49:714][ 17]LogFileHelpers: InternalPromptForCheckoutAndSave started...
+[2025.09.30-10.54.49:774][ 17]OBJ SavePackage: Generating thumbnails for [0] asset(s) in package [/Game/Prout/Server] ([2] browsable assets)...
+[2025.09.30-10.54.49:774][ 17]OBJ SavePackage: Finished generating thumbnails for package [/Game/Prout/Server]
+[2025.09.30-10.54.49:774][ 17]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Prout/Server" FILE="../../../../../DevMain/Unreal/TestRezo/TestRezo/Content/Prout/Server.uasset" SILENT=true
+[2025.09.30-10.54.49:784][ 17]LogSavePackage: Moving output files for package: /Game/Prout/Server
+[2025.09.30-10.54.49:784][ 17]LogSavePackage: Moving '../../../../../DevMain/Unreal/TestRezo/TestRezo/Saved/Server8472AF9C44CFF2633AAE9C909168914B.tmp' to '../../../../../DevMain/Unreal/TestRezo/TestRezo/Content/Prout/Server.uasset'
+[2025.09.30-10.54.49:790][ 17]LogFileHelpers: InternalPromptForCheckoutAndSave took 76.121 ms (total: 155.667 ms)
+[2025.09.30-10.54.49:841][ 17]LogContentValidation: Display: Starting to validate 1 assets
+[2025.09.30-10.54.49:841][ 17]LogContentValidation: Enabled validators:
+[2025.09.30-10.54.49:841][ 17]LogContentValidation: 	/Script/DataValidation.EditorValidator_Material
+[2025.09.30-10.54.49:841][ 17]LogContentValidation: 	/Script/DataValidation.DirtyFilesChangelistValidator
+[2025.09.30-10.54.49:841][ 17]LogContentValidation: 	/Script/DataValidation.EditorValidator_Localization
+[2025.09.30-10.54.49:841][ 17]LogContentValidation: 	/Script/DataValidation.PackageFileValidator
+[2025.09.30-10.54.49:841][ 17]LogContentValidation: 	/Script/DataValidation.WorldPartitionChangelistValidator
+[2025.09.30-10.54.49:841][ 17]LogContentValidation: 	/Script/InputBlueprintNodes.EnhancedInputUserWidgetValidator
+[2025.09.30-10.54.49:841][ 17]AssetCheck: /Game/Prout/Server Validating asset
+[2025.09.30-10.54.53:679][208]Cmd: CLOSE_SLATE_MAINFRAME
+[2025.09.30-10.54.53:714][208]LogUObjectHash: Compacting FUObjectHashTables data took   0.98ms
+[2025.09.30-10.54.53:756][208]LogStall: Shutdown...
+[2025.09.30-10.54.53:756][208]LogStall: Shutdown complete.
+[2025.09.30-10.54.53:774][208]LogSlate: Window 'Server' being destroyed
+[2025.09.30-10.54.53:799][208]LogWorld: UWorld::CleanupWorld for World_0, bSessionEnded=true, bCleanupResources=true
+[2025.09.30-10.54.53:799][208]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2025.09.30-10.54.53:851][208]LogSlate: Window 'Plugins' being destroyed
+[2025.09.30-10.54.53:857][208]LogSlate: Window 'TestRezo - Unreal Editor' being destroyed
+[2025.09.30-10.54.54:055][209]LogUObjectHash: Compacting FUObjectHashTables data took   2.50ms
+[2025.09.30-10.54.54:063][209]Cmd: QUIT_EDITOR
+[2025.09.30-10.54.54:064][210]LogCore: Engine exit requested (reason: UUnrealEdEngine::CloseEditor())
+[2025.09.30-10.54.54:091][210]LogCore: Engine exit requested (reason: EngineExit() was called; note: exit was already requested)
+[2025.09.30-10.54.54:091][210]LogStaticMesh: Abandoning remaining async distance field tasks for shutdown
+[2025.09.30-10.54.54:091][210]LogStaticMesh: Abandoning remaining async card representation tasks for shutdown
+[2025.09.30-10.54.54:092][210]LogWorld: UWorld::CleanupWorld for VRTemplateMap, bSessionEnded=true, bCleanupResources=true
+[2025.09.30-10.54.54:092][210]LogCrowdFollowing: Warning: Unable to find RecastNavMesh instance while trying to create UCrowdManager instance
+[2025.09.30-10.54.54:092][210]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2025.09.30-10.54.54:112][210]LogStylusInput: Shutting down StylusInput subsystem.
+[2025.09.30-10.54.54:112][210]LogTedsSettings: UTedsSettingsEditorSubsystem::Deinitialize
+[2025.09.30-10.54.54:112][210]LogLevelSequenceEditor: LevelSequenceEditor subsystem deinitialized.
+[2025.09.30-10.54.54:114][210]LogRuntimeTelemetry: Recording EnginePreExit events
+[2025.09.30-10.54.54:114][210]LogStudioTelemetry: Ended StudioTelemetry Session
+[2025.09.30-10.54.54:116][210]LogAnalytics: Display: [UEEditor.Rocket.Release] AnalyticsET::EndSession
+[2025.09.30-10.54.54:465][210]LogAudio: Display: Beginning Audio Device Manager Shutdown (Module: AudioMixerXAudio2)...
+[2025.09.30-10.54.54:465][210]LogAudio: Display: Destroying 1 Remaining Audio Device(s)...
+[2025.09.30-10.54.54:465][210]LogAudio: Display: Audio Device unregistered from world 'VRTemplateMap'.
+[2025.09.30-10.54.54:465][210]LogAudio: Display: Shutting down audio device while 1 references to it are still alive. For more information, compile with INSTRUMENT_AUDIODEVICE_HANDLES.
+[2025.09.30-10.54.54:465][210]LogAudioMixer: Display: FMixerPlatformXAudio2::StopAudioStream() called. InstanceID=1, StreamState=4
+[2025.09.30-10.54.54:468][210]LogAudioMixer: Display: FMixerPlatformXAudio2::StopAudioStream() called. InstanceID=1, StreamState=2
+[2025.09.30-10.54.54:476][210]LogAudioMixer: Deinitializing Audio Bus Subsystem for audio device with ID -1
+[2025.09.30-10.54.54:476][210]LogAudio: Display: Audio Device Manager Shutdown
+[2025.09.30-10.54.54:476][210]LogWindowsTextInputMethodSystem: Activated input method: Français (France) - (Keyboard).
+[2025.09.30-10.54.54:480][210]LogExit: Preparing to exit.
+[2025.09.30-10.54.54:538][210]LogUObjectHash: Compacting FUObjectHashTables data took   2.67ms
+[2025.09.30-10.54.54:540][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/add_controls_for_selected_PY.add_controls_for_selected_options' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:540][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/add_controls_for_selected_PY.add_controls_for_selected' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:540][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/add_null_above_selected_PY.add_null_above_selected' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:540][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/align_items_PY.align_translation_rotation' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:540][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/align_items_PY.align_translation_all' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:540][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/align_items_PY.align_translation_x' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:540][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/align_items_PY.align_translation_y' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:541][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/align_items_PY.align_translation_z' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:541][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/align_items_PY.align_rotation' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:541][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/align_items_PY.align_scale' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:541][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/rename_items_PY.search_replace_name_dialog' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:541][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/rename_items_PY.search_replace_entry' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:541][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/rename_items_PY.add_prefix_dialog' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:541][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/rename_items_PY.add_prefix_entry' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:541][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/rename_items_PY.add_suffix_dialog' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:541][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/rename_items_PY.add_suffix_entry' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:541][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/rename_items_PY.do_rename_dialog' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:541][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/rename_items_PY.do_rename_entry' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:541][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/set_bone_reference_pose_PY.set_bone_reference_pose' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:541][210]LogPython: Display: Object '/ControlRig/Python/ControlRigWorkflows/workflow_fbik_import_ik_rig_PY.import_ik_rig_options' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:541][210]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/add_controls_for_selected_PY.ControlOutputFormat' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2025.09.30-10.54.54:921][210]LogEditorDataStorage: Deinitializing
+[2025.09.30-10.54.55:029][210]LogText3D: Text3DActor : Text3DRenderer StaticMeshesRenderer Destroyed
+[2025.09.30-10.54.55:069][210]LogDemo: Cleaned up 0 splitscreen connections, owner deletion: enabled
+[2025.09.30-10.54.55:080][210]LogExit: Editor shut down
+[2025.09.30-10.54.55:081][210]LogExit: Transaction tracking system shut down
+[2025.09.30-10.54.55:220][210]LogExit: Object subsystem successfully closed.
+[2025.09.30-10.54.55:233][210]LogShaderCompilers: Display: Shaders left to compile 0
+[2025.09.30-10.54.55:346][210]LogShaderCompilers: Display: Shaders left to compile 0
+[2025.09.30-10.54.55:397][210]LogMemoryProfiler: Shutdown
+[2025.09.30-10.54.55:397][210]LogNetworkingProfiler: Shutdown
+[2025.09.30-10.54.55:397][210]LoadingProfiler: Shutdown
+[2025.09.30-10.54.55:397][210]LogTimingProfiler: Shutdown
+[2025.09.30-10.54.55:397][210]LogChaosVDEditor: [FChaosVDExtensionsManager::UnRegisterExtension] UnRegistering CVD Extension [FChaosVDGenericDebugDrawExtension] ...
+[2025.09.30-10.54.55:397][210]LogChaosVDEditor: [FChaosVDExtensionsManager::UnRegisterExtension] UnRegistering CVD Extension [FChaosVDAccelerationStructuresExtension] ...
+[2025.09.30-10.54.55:687][210]LogChaosDD: Chaos Debug Draw Shutdown
+[2025.09.30-10.54.55:687][210]LogSlate: Slate User Destroyed.  User Index 0, Is Virtual User: 0
+[2025.09.30-10.54.55:724][210]LogHttp: Warning: [FHttpManager::Shutdown] Unbinding delegates for 1 outstanding Http Requests:
+[2025.09.30-10.54.55:724][210]LogHttp: Warning: 	verb=[POST] url=[https://datarouter.ol.epicgames.com/datarouter/api/v1/public/data?SessionID=%7BB2561CBD-4C89-F6CF-0995-4F9A1AF0E89C%7D&AppID=UEEditor.Rocket.Release&AppVersion=5.6.1-44394996%2B%2B%2BUE5%2BRelease-5.6&UserID=4a488a924ea2c70f7121d8a58d21e768%7Ce42286890d98419180ef9552221c2f7b%7C4aff04ef-dabf-447a-8a2e-c201f03d626f&AppEnvironment=datacollector-binary&UploadType=eteventstream] refs=[2] status=Processing
+[2025.09.30-10.54.56:270][210]LogEOSShared: FEOSSDKManager::Shutdown EOS_Shutdown Result=[EOS_Success]
+[2025.09.30-10.54.56:270][210]LogNFORDenoise: NFORDenoise function shutting down
+[2025.09.30-10.54.56:270][210]RenderDocPlugin: plugin has been unloaded.
+[2025.09.30-10.54.56:281][210]LogIris: FNetObjectFactoryRegistry::UnregisterFactory is unregistering factory: None name: NetActorFactory id: 0
+[2025.09.30-10.54.56:281][210]LogIris: FNetObjectFactoryRegistry::UnregisterFactory is unregistering factory: None name: NetSubObjectFactory id: 1
+[2025.09.30-10.54.56:281][210]LogPakFile: Destroying PakPlatformFile
+[2025.09.30-10.54.56:430][210]LogD3D12RHI: ~FD3D12DynamicRHI
+[2025.09.30-10.54.56:458][210]LogExit: Exiting.
+[2025.09.30-10.54.56:495][210]Log file closed, 09/30/25 12:54:56
