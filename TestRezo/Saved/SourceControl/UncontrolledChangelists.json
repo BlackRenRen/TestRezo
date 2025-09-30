@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"changelists": [
+		{
+			"guid": "00000000000000000000000000000000",
+			"description": "Default Uncontrolled Changelist",
+			"files": [
+				"D:/DevMain/Unreal/TestRezo/TestRezo/Content/VRTemplate/Maps/VRTemplateMap_BuiltData.uasset",
+				"D:/DevMain/Unreal/TestRezo/TestRezo/Content/VRTemplate/Maps/VRTemplateMap.umap",
+				"D:/DevMain/Unreal/TestRezo/TestRezo/Content/Prout/Server.uasset"
+			]
+		}
+	]
+}
