@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "TestRezo",
+			"Path": "..\\Source\\TestRezo.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "TestRezoEditor",
+			"Path": "..\\Source\\TestRezoEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

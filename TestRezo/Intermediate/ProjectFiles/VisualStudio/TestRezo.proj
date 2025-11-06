@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Invalid|x64">
+      <Configuration>Invalid</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugGame|x64">
+      <Configuration>DebugGame</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Win64_arm64_DebugGame|x64">
+      <Configuration>Win64_arm64_DebugGame</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Win64_arm64ec_DebugGame|x64">
+      <Configuration>Win64_arm64ec_DebugGame</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Development|x64">
+      <Configuration>Development</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Win64_arm64_Development|x64">
+      <Configuration>Win64_arm64_Development</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Win64_arm64ec_Development|x64">
+      <Configuration>Win64_arm64ec_Development</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Shipping|x64">
+      <Configuration>Shipping</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Win64_arm64_Shipping|x64">
+      <Configuration>Win64_arm64_Shipping</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Win64_arm64ec_Shipping|x64">
+      <Configuration>Win64_arm64ec_Shipping</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{5DB5DD64-F9D1-3869-A557-6C62A6FB2846}</ProjectGuid>
+    <RootNamespace>TestRezo</RootNamespace>
+  </PropertyGroup>
+  <Import Project="UECommon.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame|x64'">
+    <NMakeBuildCommandLine>$(_UProjectNMakeBuildCommandLine)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>$(_UProjectNMakeReBuildCommandLine)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>$(_UProjectNMakeCleanCommandLine)</NMakeCleanCommandLine>
+    <NMakeOutput>$(_UProjectNMakeOutput)</NMakeOutput>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame|x64'">
+    <NMakeCompile>
+      <NMakeCompileFileCommandLine>$(_UProjectNMakeCompileFileCommandLine)</NMakeCompileFileCommandLine>
+    </NMakeCompile>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64_DebugGame|x64'">
+    <NMakeBuildCommandLine>$(_UProjectNMakeBuildCommandLine)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>$(_UProjectNMakeReBuildCommandLine)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>$(_UProjectNMakeCleanCommandLine)</NMakeCleanCommandLine>
+    <NMakeOutput>$(_UProjectNMakeOutput)</NMakeOutput>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64_DebugGame|x64'">
+    <NMakeCompile>
+      <NMakeCompileFileCommandLine>$(_UProjectNMakeCompileFileCommandLine)</NMakeCompileFileCommandLine>
+    </NMakeCompile>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64ec_DebugGame|x64'">
+    <NMakeBuildCommandLine>$(_UProjectNMakeBuildCommandLine)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>$(_UProjectNMakeReBuildCommandLine)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>$(_UProjectNMakeCleanCommandLine)</NMakeCleanCommandLine>
+    <NMakeOutput>$(_UProjectNMakeOutput)</NMakeOutput>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64ec_DebugGame|x64'">
+    <NMakeCompile>
+      <NMakeCompileFileCommandLine>$(_UProjectNMakeCompileFileCommandLine)</NMakeCompileFileCommandLine>
+    </NMakeCompile>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'">
+    <NMakeBuildCommandLine>$(_UProjectNMakeBuildCommandLine)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>$(_UProjectNMakeReBuildCommandLine)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>$(_UProjectNMakeCleanCommandLine)</NMakeCleanCommandLine>
+    <NMakeOutput>$(_UProjectNMakeOutput)</NMakeOutput>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'">
+    <NMakeCompile>
+      <NMakeCompileFileCommandLine>$(_UProjectNMakeCompileFileCommandLine)</NMakeCompileFileCommandLine>
+    </NMakeCompile>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64_Development|x64'">
+    <NMakeBuildCommandLine>$(_UProjectNMakeBuildCommandLine)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>$(_UProjectNMakeReBuildCommandLine)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>$(_UProjectNMakeCleanCommandLine)</NMakeCleanCommandLine>
+    <NMakeOutput>$(_UProjectNMakeOutput)</NMakeOutput>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64_Development|x64'">
+    <NMakeCompile>
+      <NMakeCompileFileCommandLine>$(_UProjectNMakeCompileFileCommandLine)</NMakeCompileFileCommandLine>
+    </NMakeCompile>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64ec_Development|x64'">
+    <NMakeBuildCommandLine>$(_UProjectNMakeBuildCommandLine)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>$(_UProjectNMakeReBuildCommandLine)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>$(_UProjectNMakeCleanCommandLine)</NMakeCleanCommandLine>
+    <NMakeOutput>$(_UProjectNMakeOutput)</NMakeOutput>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64ec_Development|x64'">
+    <NMakeCompile>
+      <NMakeCompileFileCommandLine>$(_UProjectNMakeCompileFileCommandLine)</NMakeCompileFileCommandLine>
+    </NMakeCompile>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Shipping|x64'">
+    <NMakeBuildCommandLine>$(_UProjectNMakeBuildCommandLine)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>$(_UProjectNMakeReBuildCommandLine)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>$(_UProjectNMakeCleanCommandLine)</NMakeCleanCommandLine>
+    <NMakeOutput>$(_UProjectNMakeOutput)</NMakeOutput>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Shipping|x64'">
+    <NMakeCompile>
+      <NMakeCompileFileCommandLine>$(_UProjectNMakeCompileFileCommandLine)</NMakeCompileFileCommandLine>
+    </NMakeCompile>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64_Shipping|x64'">
+    <NMakeBuildCommandLine>$(_UProjectNMakeBuildCommandLine)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>$(_UProjectNMakeReBuildCommandLine)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>$(_UProjectNMakeCleanCommandLine)</NMakeCleanCommandLine>
+    <NMakeOutput>$(_UProjectNMakeOutput)</NMakeOutput>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64_Shipping|x64'">
+    <NMakeCompile>
+      <NMakeCompileFileCommandLine>$(_UProjectNMakeCompileFileCommandLine)</NMakeCompileFileCommandLine>
+    </NMakeCompile>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64ec_Shipping|x64'">
+    <NMakeBuildCommandLine>$(_UProjectNMakeBuildCommandLine)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>$(_UProjectNMakeReBuildCommandLine)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>$(_UProjectNMakeCleanCommandLine)</NMakeCleanCommandLine>
+    <NMakeOutput>$(_UProjectNMakeOutput)</NMakeOutput>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64ec_Shipping|x64'">
+    <NMakeCompile>
+      <NMakeCompileFileCommandLine>$(_UProjectNMakeCompileFileCommandLine)</NMakeCompileFileCommandLine>
+    </NMakeCompile>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <PropertyGroup>
+    <CleanDependsOn> $(CleanDependsOn); </CleanDependsOn>
+  </PropertyGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

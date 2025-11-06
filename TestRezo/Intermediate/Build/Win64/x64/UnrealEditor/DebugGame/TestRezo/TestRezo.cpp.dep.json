@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\devmain\\unreal\\testrezo\\testrezo\\source\\testrezo\\testrezo.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\devmain\\unreal\\testrezo\\testrezo\\intermediate\\build\\win64\\x64\\testrezoeditor\\debuggame\\unrealed\\sharedpch.unrealed.project.nonoptimized.valapi.valexpapi.cpp20.inclorderunreal5_3.h.pch",
+        "Includes": [
+            "d:\\devmain\\unreal\\testrezo\\testrezo\\intermediate\\build\\win64\\x64\\unrealeditor\\debuggame\\testrezo\\definitions.testrezo.h",
+            "d:\\devmain\\unreal\\testrezo\\testrezo\\source\\testrezo\\testrezo.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

@@ -1,0 +1,14 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-TestRezo-Win64-DebugGame.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:/DevMain/Unreal/TestRezo/TestRezo/Intermediate/Build/Win64/x64/TestRezoEditor/DebugGame/UnrealEd/SharedPCH.UnrealEd.Project.NonOptimized.ValApi.ValExpApi.Cpp20.InclOrderUnreal5_3.h.obj"
+"D:/DevMain/Unreal/TestRezo/TestRezo/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/TestRezo/TestRezo.cpp.obj"
+"D:/DevMain/Unreal/TestRezo/TestRezo/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/TestRezo/Prout.cpp.obj"
+"D:/DevMain/Unreal/TestRezo/TestRezo/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/TestRezo/PerModuleInline.gen.cpp.obj"
+"D:/DevMain/Unreal/TestRezo/TestRezo/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/TestRezo/Default.rc2.res"
+/OUT:"D:/DevMain/Unreal/TestRezo/TestRezo/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/TestRezo/UnrealEditor-TestRezo-Win64-DebugGame.lib"
