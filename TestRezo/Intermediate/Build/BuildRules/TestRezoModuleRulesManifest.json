@@ -1,8 +1,0 @@
-{
-	"SourceFiles": [
-		"D:\\DevMain\\Unreal\\TestRezo\\TestRezo\\Source\\TestRezo\\TestRezo.Build.cs",
-		"D:\\DevMain\\Unreal\\TestRezo\\TestRezo\\Source\\TestRezo.Target.cs",
-		"D:\\DevMain\\Unreal\\TestRezo\\TestRezo\\Source\\TestRezoEditor.Target.cs"
-	],
-	"EngineVersion": "5.6.1"
-}
