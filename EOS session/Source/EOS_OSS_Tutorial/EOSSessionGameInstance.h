@@ -2,128 +2,58 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
-#include "OnlineSessionSettings.h"
+#include "UObject/ObjectMacros.h"
+#include "UObject/ScriptMacros.h"
+
 #include "Interfaces/OnlineSessionInterface.h"
-#include "OnlineSubsystemTypes.h"
-#include "OnlineSubsystem.h"
+#include "Interfaces/OnlineIdentityInterface.h"
+
 #include "EOSSessionGameInstance.generated.h"
 
-
-// Clés de settings de session utilisées dans tout le projet.
-// Ces macros n'existent pas dans l'engine, elles viennent des exemples type ShooterGame.
-#ifndef SETTING_MAPNAME
-#define SETTING_MAPNAME FName(TEXT("MAPNAME"))
-#endif
-
-#ifndef SETTING_DEDICATED
-#define SETTING_DEDICATED FName(TEXT("DEDICATED"))
-#endif
+class USessionRowData;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSessionsSearchUpdated, int32, EffectiveCount);
-
-/********************************************************************
- * SESSION FILTER PARAMETERS
- ********************************************************************/
-USTRUCT(BlueprintType)
-struct FSessionClientFilterParams
-{
-    GENERATED_BODY()
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    bool bMatchRegionStrict = false;
-
-    // Nouveau : filtrage explicite LAN / dedicated
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    bool bFilterLANOnly = false;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    bool bFilterDedicatedOnly = false;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    bool bFilterMap = false;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    bool bFilterRuleSet = false;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    bool bRequireFreeSlots = false;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    bool bFilterMaxAge = false;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    bool bRequireMinPresentPlayers = false;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    FString Region;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    FString MapName;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    FString RuleSet;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    int32 MinFreeSlotsA = 0;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    int32 MinFreeSlotsB = 0;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float MaxAgeMinutes = 9999.f;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    int32 MinPresentPlayers = 0;
-};
 
 UENUM(BlueprintType)
 enum class EMatchGameMode : uint8
 {
-    QuickMatch      UMETA(DisplayName = "QuickMatch"),
-    Ranked      UMETA(DisplayName = "Ranked"),
-    Training    UMETA(DisplayName = "Training"),
-    ChampionshipMatch UMETA(DisplayName = "Championship Match"),
+    QuickMatch UMETA(DisplayName="Quick Match"),
+    Training UMETA(DisplayName="Training"),
+    ChampionshipMatch UMETA(DisplayName="Championship Match")
 };
 
-/********************************************************************
- * RANKING WEIGHTS
- ********************************************************************/
 USTRUCT(BlueprintType)
-struct FSessionRankingWeights
+struct EOS_OSS_TUTORIAL_API FSessionRankingWeights
 {
     GENERATED_BODY()
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float w_region = 1.f;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="EOS|Sessions")
+    float w_region = 1.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float w_map = 1.f;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="EOS|Sessions")
+    float w_map = 1.0f;
 
-    // Ancien champ, on le laisse au cas où tu lutilises en BP
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float w_ruleset = 1.f;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="EOS|Sessions")
+    float w_ruleset = 1.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float w_slots = 1.f;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="EOS|Sessions")
+    float w_slots = 1.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float w_level = 0.3f;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="EOS|Sessions")
+    float w_level = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float w_friends = 1.f;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="EOS|Sessions")
+    float w_friends = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float w_age = 1.f;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="EOS|Sessions")
+    float w_age = 0.0f;
 
-    // Nouveaux champs utilisés dans GetScoreForIndex
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float w_rules = 1.f;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="EOS|Sessions")
+    float w_rules = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float w_ping = 1.f;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="EOS|Sessions")
+    float w_ping = 1.0f;
 };
-
-
 
 UCLASS()
 class EOS_OSS_TUTORIAL_API UEOSSessionGameInstance : public UGameInstance
@@ -131,115 +61,85 @@ class EOS_OSS_TUTORIAL_API UEOSSessionGameInstance : public UGameInstance
     GENERATED_BODY()
 
 public:
-
     UEOSSessionGameInstance();
-    virtual ~UEOSSessionGameInstance() {}
-    virtual void Init() override;
 
-    UPROPERTY(BlueprintAssignable, Category = "Online|EOS")
+    // --- Delegates ---
+    UPROPERTY(BlueprintAssignable, Category="EOS|Sessions")
     FOnSessionsSearchUpdated OnSessionsSearchUpdated;
 
-    UFUNCTION(BlueprintPure, Category = "EOS|Sessions")
-    static FString GameModeToString(EMatchGameMode GameMode);
+    // --- Login ---
+    // Matches existing BP nodes (Dev Auth Id + Credential Name)
+    UFUNCTION(BlueprintCallable, Category="EOS|Auth")
+    bool LoginWithDevAuth(bool bDevAuthId, const FString& CredentialName);
 
-    /********************************************************************
-     * HOST
-     ********************************************************************/
-    UFUNCTION(BlueprintCallable, Category = "Online|EOS")
-    bool HostSession(
-        const FString& SessionName,
-        const FString& MapName,
-        const FString& Region,
-        const FString& RuleSet,
-        bool bIsPrivate,
-        int32 PlayersPerTeam
-    );
+    // Compatibility overloads (NOT exposed to Blueprint).
+    // These keep compilation working even if stale generated wrappers exist in Intermediate.
+    bool LoginWithDevAuth(const FString& CredentialName);
 
-    bool HostSession(const FString& SessionName, const FString& MapName, const FString& Region, EMatchGameMode GameMode, bool bIsPrivate, int32 PlayersPerTeam);
+    // --- Find/Host/Join ---
+    UFUNCTION(BlueprintCallable, Category="EOS|Sessions")
+    void FindSessions(int32 MaxResults);
 
-    UFUNCTION(BlueprintCallable, Category = "Sessions")
-    bool HostSessionWithGameMode(const FString& SessionName,
-        const FString& MapName,
-        const FString& Region,
-        EMatchGameMode GameMode,
-        bool bIsPrivate,
-        int32 PlayersPerTeam);
+    // Matches existing BP nodes (Session Name / Map Name / Region / Rule Set / Is Private / Players Per Team)
+    UFUNCTION(BlueprintCallable, Category="EOS|Sessions")
+    bool HostSession(const FString& SessionName, const FString& MapName, const FString& Region, const FString& RuleSet, bool bIsPrivate, int32 PlayersPerTeam);
 
-    void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful);
+    // Preferred Blueprint API: stable name (no overload ambiguity) + full parameter set.
+    // Use this in Blueprints instead of HostSession if you have pin mismatch warnings.
+    UFUNCTION(BlueprintCallable, Category="EOS|Sessions", meta=(DisplayName="Host Session Advanced"))
+    bool HostSessionAdvanced(const FString& SessionName, const FString& MapName, const FString& Region, const FString& RuleSet, bool bIsPrivate, int32 PlayersPerTeam);
 
 
-    /********************************************************************
-     * FIND
-     ********************************************************************/
-    UFUNCTION(BlueprintCallable, Category = "Online|EOS")
-    bool FindSessions(int32 MaxResults, bool bWithPresence);
+    // Compatibility overload (NOT exposed to Blueprint).
+    bool HostSession(int32 NumPublicConnections, const FString& MapName, bool bIsPrivate);
 
-    void OnFindSessionsComplete(bool bWasSuccessful);
+    UFUNCTION(BlueprintCallable, Category="EOS|Sessions")
+    void JoinSessionByIndex(int32 SearchResultIndex);
 
-    /** Raw authoritative Session Results */
-    TArray<FOnlineSessionSearchResult> SearchResultsCache;// Cached search results (copie de SessionSearch->SearchResults)// Native results//
+    UFUNCTION(BlueprintCallable, Category="EOS|Sessions")
+    void JoinSessionByItem(USessionRowData* Item);
 
+    // Data for UMG ListView
+    UFUNCTION(BlueprintCallable, Category="EOS|Sessions")
+    TArray<USessionRowData*> GetSessionListItems() const;
 
-    /** Hôte DevAuthTool, par défaut "localhost:8081" */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Online|EOS|Auth")
-    FString DevAuthHost;
+    // Optional helper expected by older generated code paths
+    UFUNCTION(BlueprintPure, Category="EOS|Sessions")
+    FString GameModeToString(EMatchGameMode Mode) const;
 
-    /** Lance un login DevAuth avec le CredentialName configuré dans DevAuthTool (ex: "Renaud", "Johan") */
-    UFUNCTION(BlueprintCallable, Category = "Online|EOS|Auth")
-    void LoginWithDevAuth(const FString& CredentialName);
-    // EOSSessionGameInstance.h
-
-    UPROPERTY(BlueprintReadOnly, Category = "EOS|Auth")
-    FString LastCredentialName;   // "Johan" / "Renaud"
-
-    UPROPERTY(BlueprintReadOnly, Category = "EOS|Auth")
-    FString LocalDisplayName;     // ce qu'on expose comme nom joueur
-
-    UFUNCTION(BlueprintCallable, Category = "EOS|Auth")
-    FString GetLocalDisplayName() const { return LocalDisplayName; }
-
-    /********************************************************************
-     * CLIENT FILTERING
-     ********************************************************************/
-     // Utilisé par EOSSessionGameInstance.cpp (BuildFilteredIndex avec InFilters)
-    UFUNCTION(BlueprintCallable, Category = "Online|EOS|Filtering")
-    void BuildFilteredIndex(const FSessionClientFilterParams& FilterParams);
-
-    /** Indices filtrés -> index bruts de SearchResultsCache */
-    TArray<int32> FilteredToRawIndex;
-
-
-    /********************************************************************
-     * RANKING
-     ********************************************************************/
-    UFUNCTION(BlueprintCallable, Category = "Online|EOS|Ranking")
-    void RankAndSortFiltered(const FSessionRankingWeights& Weights);
-
-    /** Indices triés (toujours indices bruts de SearchResultsCache) */
-    TArray<int32> RankedIndexes;
-
-    /** Nombre effectif de sessions après filtrage / tri (pour lUI) */
-    int32 EffectiveSessionCount = 0;
-
-    /** Poids de ranking exposés aux BP / UI */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Online|EOS|Ranking")
+    // Weights exposed for optional sorting/ranking in BP.
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="EOS|Sessions")
     FSessionRankingWeights RankingWeights;
 
-    // Nouvelle signature, alignée sur le .cpp et SessionMenuWidget.cpp
-    float GetScoreForIndex(int32 RawIndex, const FSessionRankingWeights& Weights) const;
-
-
-    /********************************************************************
-     * JOIN SESSION
-     ********************************************************************/
-    UFUNCTION(BlueprintCallable, Category = "Online|EOS")
-    bool JoinSessionByRawIndex(int32 RawIndex);
-
-    void OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result);
-
-    void LeaveSession();
+protected:
+    virtual void Init() override;
 
 private:
+    void EnsureOnlineInterfaces();
+
+    void OnLoginComplete(int32 LocalUserNum, bool bWasSuccessful, const FUniqueNetId& UserId, const FString& Error);
+    void OnFindSessionsComplete(bool bWasSuccessful);
+    void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful);
+    void OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result);
+
+    void RebuildCachedItems();
+
+private:
+    // Online
     IOnlineSessionPtr SessionInterface;
-    TSharedPtr<FOnlineSessionSearch> SessionSearch;
+    IOnlineIdentityPtr IdentityInterface;
+
+    TSharedPtr<class FOnlineSessionSearch> SessionSearch;
+
+    // Cached ListView items
+    UPROPERTY()
+    TArray<TObjectPtr<USessionRowData>> CachedItems;
+
+    // Simple host settings cache
+	bool bLastHostWasPrivate = false;
+	FString LastHostSessionName;
+	FString LastHostMap;
+	FString LastHostRegion;
+	FString LastHostRuleSet;
+	int32 LastHostPlayersPerTeam = 0;
 };

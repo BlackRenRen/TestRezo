@@ -9,6 +9,7 @@ void AMenuPlayerController::BeginPlay()
 
     UE_LOG(LogTemp, Log, TEXT("AMenuPlayerController::BeginPlay appele"));
 
+    // Très important : ne créer le widget que pour le contrôleur local
     if (!IsLocalController())
     {
         UE_LOG(LogTemp, Log, TEXT("AMenuPlayerController: non-local controller, pas de widget de menu"));
@@ -28,17 +29,27 @@ void AMenuPlayerController::BeginPlay()
         return;
     }
 
+    // Afficher le menu à l’écran
     SessionMenu->AddToViewport();
+
+    // Mode d’input UI uniquement, focus sur ce widget
+    FInputModeUIOnly InputMode;
+    InputMode.SetWidgetToFocus(SessionMenu->TakeWidget());
+    InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+    SetInputMode(InputMode);
+
     SetCurrentMenuWidget(SessionMenu);
 
+    if (SessionMenuClass)
+    {
+        UUserWidget* Menu = CreateWidget<UUserWidget>(this, SessionMenuClass);
+        if (Menu)
+        {
+            Menu->AddToViewport();
+            bShowMouseCursor = true;
+            SetInputMode(FInputModeUIOnly());
+        }
+    }
+
     bShowMouseCursor = true;
-
-    FInputModeUIOnly InputMode;
-    InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-
-    // IMPORTANT : SetWidgetToFocus attend un TSharedPtr<SWidget>
-    // TakeWidget() retourne un TSharedRef<SWidget> -> conversion OK, mais on reste explicite.
- 
-    SetInputMode(InputMode);
 }
-

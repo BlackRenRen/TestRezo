@@ -2,29 +2,17 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "UObject/ObjectMacros.h"
+#include "UObject/ScriptMacros.h"
+
 #include "SessionMenuWidget.generated.h"
 
-class UPanelWidget;
-class USessionRowWidget;
-
+/**
+ * NOTE: This class is intentionally minimal.
+ * If you prefer a pure Blueprint widget, do not derive your WBP from this.
+ */
 UCLASS()
 class EOS_OSS_TUTORIAL_API USessionMenuWidget : public UUserWidget
 {
-    GENERATED_BODY()
-
-public:
-
-    UFUNCTION(BlueprintCallable, Category = "Online|EOS|UI")
-    void RefreshSessionList();
-
-    void HandleJoinRequested(int32 RawIndex);
-
-protected:
-
-    UPROPERTY(meta = (BindWidget))
-    TObjectPtr<UPanelWidget> SessionList;
-
-    // Classe de widget pour chaque ligne de session
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Online|EOS|UI")
-    TSubclassOf<USessionRowWidget> SessionRowClass;
+	GENERATED_BODY()
 };

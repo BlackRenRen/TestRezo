@@ -1,43 +1,56 @@
-﻿#pragma once
+#pragma once
 
 #include "CoreMinimal.h"
+#include "UObject/Object.h"
+#include "UObject/ObjectMacros.h"
+#include "UObject/ScriptMacros.h"
+
 #include "SessionRowData.generated.h"
 
-USTRUCT(BlueprintType)
-struct FSessionRowData
+UCLASS(BlueprintType)
+class EOS_OSS_TUTORIAL_API USessionRowData : public UObject
 {
     GENERATED_BODY()
 
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Session")
-    int32 RawIndex = INDEX_NONE;
+public:
+    // Index into the last FindSessions results (used to JoinSession).
+    UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
+    int32 SearchResultIndex = INDEX_NONE;
 
-    // Identifiant lisible de la session (GetSessionIdStr)
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Session")
-    FText SessionId;
+    UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
+    FString SessionId;
 
-    // Nom du propriétaire (OwningUserName)
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Session")
-    FText OwnerName;
+    UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
+    FString SessionName;
 
-    // Nom de session éventuel (si tu veux l’afficher à part)
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Session")
-    FText SessionName;
+    UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
+    FString HostName;
 
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Session")
+    UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
+    FString MapName;
+
+    UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
+    FString Region;
+
+    UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
+    FString RuleSet;
+
+    // Legacy/compat slot fields (some UMG rows use these names).
+    UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
+    int32 OpenPublicSlots = 0;
+
+    UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
+    int32 MaxPublicSlots = 0;
+
+    UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
     int32 CurrentPlayers = 0;
 
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Session")
+    UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
     int32 MaxPlayers = 0;
 
-    // Ping en ms
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Session")
-    int32 Ping = 0;
+    UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
+    int32 PingMs = 0;
 
-    // Nom de la map (SETTING_MAPNAME)
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Session")
-    FText MapName;
-
-    // Score client (résultat de GetScoreForIndex)
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Session")
-    float Score = 0.f;
+    UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
+    bool bIsPrivate = false;
 };
