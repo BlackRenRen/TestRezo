@@ -40,7 +40,13 @@ public:
     int32 OpenPublicSlots = 0;
 
     UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
+    int32 OpenPrivateSlots = 0;
+
+    UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
     int32 MaxPublicSlots = 0;
+
+    UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
+    int32 MaxPrivateSlots = 0;
 
     UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
     int32 CurrentPlayers = 0;
@@ -53,4 +59,8 @@ public:
 
     UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
     bool bIsPrivate = false;
+
+	// Convenience flag for UI. Typically true when there are open public slots.
+	UPROPERTY(BlueprintReadOnly, Category="EOS|Sessions")
+	bool bIsJoinable = false;
 };

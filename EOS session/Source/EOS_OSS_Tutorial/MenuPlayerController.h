@@ -7,7 +7,7 @@
 class USessionMenuWidget;
 
 /**
- * PlayerController utilisé sur la MenuMap pour afficher le menu de sessions.
+ * PlayerController utilisÃ© sur la MenuMap pour afficher le menu de sessions.
  */
 UCLASS()
 class EOS_OSS_TUTORIAL_API AMenuPlayerController : public APlayerController

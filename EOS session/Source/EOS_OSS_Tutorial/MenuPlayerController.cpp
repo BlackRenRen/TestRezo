@@ -7,49 +7,36 @@ void AMenuPlayerController::BeginPlay()
 {
     Super::BeginPlay();
 
-    UE_LOG(LogTemp, Log, TEXT("AMenuPlayerController::BeginPlay appele"));
+	UE_LOG(LogTemp, Log, TEXT("AMenuPlayerController::BeginPlay"));
 
-    // Très important : ne créer le widget que pour le contrôleur local
-    if (!IsLocalController())
-    {
-        UE_LOG(LogTemp, Log, TEXT("AMenuPlayerController: non-local controller, pas de widget de menu"));
-        return;
-    }
+	// TrÃ¨s important : ne crÃ©er le widget que pour le contrÃ´leur local
+	if (!IsLocalController())
+	{
+		return;
+	}
 
-    if (!SessionMenuClass)
-    {
-        UE_LOG(LogTemp, Error, TEXT("AMenuPlayerController : SessionMenuClass n'est PAS configure !"));
-        return;
-    }
+	bShowMouseCursor = true;
+	bEnableClickEvents = true;
+	bEnableMouseOverEvents = true;
 
-    SessionMenu = CreateWidget<USessionMenuWidget>(this, SessionMenuClass);
-    if (!SessionMenu)
-    {
-        UE_LOG(LogTemp, Error, TEXT("AMenuPlayerController : CreateWidget a renvoy nullptr !"));
-        return;
-    }
+	if (!SessionMenuClass)
+	{
+		UE_LOG(LogTemp, Error, TEXT("AMenuPlayerController: SessionMenuClass is not set"));
+		return;
+	}
 
-    // Afficher le menu à l’écran
-    SessionMenu->AddToViewport();
+	SessionMenu = CreateWidget<USessionMenuWidget>(this, SessionMenuClass);
+	if (!SessionMenu)
+	{
+		UE_LOG(LogTemp, Error, TEXT("AMenuPlayerController: Failed to create SessionMenu widget"));
+		return;
+	}
 
-    // Mode d’input UI uniquement, focus sur ce widget
-    FInputModeUIOnly InputMode;
-    InputMode.SetWidgetToFocus(SessionMenu->TakeWidget());
-    InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-    SetInputMode(InputMode);
+	SessionMenu->AddToViewport(0);
+	SetCurrentMenuWidget(SessionMenu);
 
-    SetCurrentMenuWidget(SessionMenu);
-
-    if (SessionMenuClass)
-    {
-        UUserWidget* Menu = CreateWidget<UUserWidget>(this, SessionMenuClass);
-        if (Menu)
-        {
-            Menu->AddToViewport();
-            bShowMouseCursor = true;
-            SetInputMode(FInputModeUIOnly());
-        }
-    }
-
-    bShowMouseCursor = true;
+	// Pas de focus clavier (VR-friendly) : ne pas appeler SetWidgetToFocus.
+	FInputModeUIOnly InputMode;
+	InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+	SetInputMode(InputMode);
 }
