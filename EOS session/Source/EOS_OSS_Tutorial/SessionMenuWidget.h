@@ -1,13 +1,17 @@
 #pragma once
+// FIX_V28_MARKER
 
 #include "CoreMinimal.h"
+#include "CoreUObject.h"
+#include "UObject/NoExportTypes.h"
 #include "Blueprint/UserWidget.h"
+#include "UObject/ObjectMacros.h"
+#include "UObject/ScriptMacros.h"
 
 #include "SessionMenuWidget.generated.h"
 
 class UButton;
 class UListView;
-class UEOSSessionGameInstance;
 
 UCLASS()
 class EOS_OSS_TUTORIAL_API USessionMenuWidget : public UUserWidget
@@ -16,6 +20,7 @@ class EOS_OSS_TUTORIAL_API USessionMenuWidget : public UUserWidget
 
 protected:
 	virtual void NativeConstruct() override;
+	virtual void NativeDestruct() override;
 
 private:
 	UFUNCTION()
@@ -30,23 +35,30 @@ private:
 	UFUNCTION()
 	void HandleLoginJohanClicked();
 
+	// Dynamic multicast delegate callback (must be UFUNCTION for AddDynamic).
 	UFUNCTION()
-	void RebuildSessionList(int32 EffectiveCount);
+	void HandleSessionsSearchUpdated(int32 EffectiveCount);
+
+	UFUNCTION(BlueprintCallable)
+	void RebuildSessionList();
+
+public:
+	// Public to avoid access-control issues if UHT generation is disrupted.
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget, AllowPrivateAccess = "true"))
+	TObjectPtr<UListView> SessionListView = nullptr;
+
+	UPROPERTY(meta = (BindWidgetOptional))
+	TObjectPtr<UButton> RefreshButton = nullptr;
+
+	UPROPERTY(meta = (BindWidgetOptional))
+	TObjectPtr<UButton> HostButton = nullptr;
+
+	UPROPERTY(meta = (BindWidgetOptional))
+	TObjectPtr<UButton> LoginRenaudButton = nullptr;
+
+	UPROPERTY(meta = (BindWidgetOptional))
+	TObjectPtr<UButton> LoginJohanButton = nullptr;
 
 private:
-	// Bind these to your WBP_SessionMenuWidget widgets (names must match for BindWidget).
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget, AllowPrivateAccess = "true"))
-	TObjectPtr<class UListView> SessionListView;
-
-	UPROPERTY(meta = (BindWidgetOptional))
-	TObjectPtr<UButton> RefreshButton;
-
-	UPROPERTY(meta = (BindWidgetOptional))
-	TObjectPtr<UButton> HostButton;
-
-	UPROPERTY(meta = (BindWidgetOptional))
-	TObjectPtr<UButton> LoginRenaudButton;
-
-	UPROPERTY(meta = (BindWidgetOptional))
-	TObjectPtr<UButton> LoginJohanButton;
+	// NOTE: Dynamic multicast delegates don't use FDelegateHandle. We unbind via RemoveAll(this).
 };

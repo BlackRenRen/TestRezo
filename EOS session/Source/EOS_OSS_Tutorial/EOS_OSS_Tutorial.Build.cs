@@ -15,6 +15,8 @@ public class EOS_OSS_Tutorial : ModuleRules
             "UMG",
             "OnlineSubsystem",
             "OnlineSubsystemUtils",
+            "Sockets",
+            "Networking",
             "EOSSDK"
         });
 

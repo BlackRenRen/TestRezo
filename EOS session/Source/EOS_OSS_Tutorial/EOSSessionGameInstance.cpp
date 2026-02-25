@@ -1,581 +1,602 @@
 #include "EOSSessionGameInstance.h"
+// v31_linkfix: avoid Set<int64> to prevent LNK2019
 
-#include "Engine/Engine.h"
-#include "Engine/World.h"
-#include "GameFramework/PlayerController.h"
+#include "Interfaces/OnlineSessionInterface.h"
 
 #include "OnlineSubsystem.h"
-#include "OnlineSubsystemUtils.h"
+#include "Kismet/GameplayStatics.h"
 #include "Misc/ConfigCacheIni.h"
 
-namespace
+#include "Sockets.h"
+#include "SocketSubsystem.h"
+#include "IPAddress.h"
+
+#include "SessionRowData.h"
+
+const FName UEOSSessionGameInstance::GAME_SESSION_NAME(TEXT("GameSession"));
+const FName UEOSSessionGameInstance::KEY_APP_TAG(TEXT("APP_TAG"));
+const FName UEOSSessionGameInstance::KEY_MAPNAME(TEXT("MAPNAME"));
+const FName UEOSSessionGameInstance::KEY_DISPLAY_NAME(TEXT("DISPLAY_NAME"));
+const FName UEOSSessionGameInstance::KEY_HOST_TS(TEXT("HOST_TS"));
+
+static bool IsDevAuthToolReachable(const FString& Addr, double TimeoutSeconds = 0.25)
 {
-	static IOnlineSubsystem* GetOSSForWorld(const UObject* WorldContextObject)
+	FString HostStr;
+	FString PortStr;
+	if (!Addr.Split(TEXT(":"), &HostStr, &PortStr))
 	{
-		if (WorldContextObject)
+		return false;
+	}
+
+	const int32 Port = FCString::Atoi(*PortStr);
+	if (Port <= 0)
+	{
+		return false;
+	}
+
+	// Normalize localhost to an IPv4 literal (FInternetAddr::SetIp expects an address, not a hostname)
+	if (HostStr.Equals(TEXT("localhost"), ESearchCase::IgnoreCase))
+	{
+		HostStr = TEXT("127.0.0.1");
+	}
+
+	ISocketSubsystem* SocketSubsystem = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM);
+	if (!SocketSubsystem)
+	{
+		return false;
+	}
+
+	TSharedRef<FInternetAddr> InternetAddr = SocketSubsystem->CreateInternetAddr();
+	bool bIsValidIp = false;
+	InternetAddr->SetIp(*HostStr, bIsValidIp);
+	if (!bIsValidIp)
+	{
+		return false;
+	}
+	InternetAddr->SetPort(Port);
+
+	FSocket* Socket = SocketSubsystem->CreateSocket(NAME_Stream, TEXT("DevAuthProbe"), false);
+	if (!Socket)
+	{
+		return false;
+	}
+
+	Socket->SetNonBlocking(true);
+	bool bConnected = Socket->Connect(*InternetAddr);
+	if (!bConnected)
+	{
+		const ESocketErrors Err = SocketSubsystem->GetLastErrorCode();
+		if (Err == SE_EWOULDBLOCK || Err == SE_EINPROGRESS || Err == SE_EALREADY)
 		{
-			if (const UWorld* World = WorldContextObject->GetWorld())
-			{
-				if (IOnlineSubsystem* Subsystem = Online::GetSubsystem(World))
-				{
-					return Subsystem;
-				}
-			}
+			bConnected = Socket->Wait(ESocketWaitConditions::WaitForWrite, FTimespan::FromSeconds(TimeoutSeconds))
+				&& (Socket->GetConnectionState() == SCS_Connected);
 		}
-		return IOnlineSubsystem::Get();
 	}
 
-	static bool ShouldFallbackToAccountPortalFromDevAuthError(const FString& Error)
-	{
-		// Be conservative: only fallback when it looks like a connectivity/service issue (e.g. DevAuthTool not running).
-		return Error.Contains(TEXT("EOS_NoConnection")) ||
-		       Error.Contains(TEXT("EOS_ServiceFailure")) ||
-		       Error.Contains(TEXT("EOS_TimedOut")) ||
-		       Error.Contains(TEXT("EOS_TooManyRequests"));
-	}
-}
-
-
-namespace
-{
-	static const FName NAME_EOSGameSession(TEXT("GameSession"));
-static const FName KEY_MAPNAME(TEXT("MAPNAME"));
-static const FName KEY_DISPLAY_SESSION_NAME(TEXT("DISPLAY_SESSION_NAME"));
-	static const FName KEY_REGION(TEXT("REGION"));
-	static const FName KEY_RULESET(TEXT("RULESET"));
-}
-
-UEOSSessionGameInstance::UEOSSessionGameInstance()
-{
+	Socket->Close();
+	SocketSubsystem->DestroySocket(Socket);
+	return bConnected;
 }
 
 void UEOSSessionGameInstance::Init()
 {
 	Super::Init();
 
-	IOnlineSubsystem* Subsystem = GetOSSForWorld(this);
-	SessionInterface = Subsystem ? Subsystem->GetSessionInterface() : nullptr;
-	IdentityInterface = Subsystem ? Subsystem->GetIdentityInterface() : nullptr;
-
-	// Cache DevAuth settings (read from [OnlineSubsystemEOS] in DefaultEngine.ini).
-	bUseDevAuthConfig = false;
-	DevAuthToolAddressConfig = TEXT("127.0.0.1:8081");
-	if (GConfig)
+	IOnlineSubsystem* Subsystem = IOnlineSubsystem::Get();
+	if (!Subsystem)
 	{
-		GConfig->GetBool(TEXT("OnlineSubsystemEOS"), TEXT("bUseDevAuth"), bUseDevAuthConfig, GEngineIni);
-
-		FString Addr;
-		if (GConfig->GetString(TEXT("OnlineSubsystemEOS"), TEXT("DevAuthToolAddress"), Addr, GEngineIni) && !Addr.IsEmpty())
-		{
-			DevAuthToolAddressConfig = Addr;
-		}
+		UE_LOG(LogTemp, Error, TEXT("EOSSessionGameInstance::Init - No OnlineSubsystem"));
+		return;
 	}
 
-	UE_LOG(LogTemp, Log,
-		TEXT("EOSSessionGameInstance::Init - Subsystem=%s Session=%s Identity=%s DevAuthEnabled=%d DevAuthAddr=%s"),
-		Subsystem ? *Subsystem->GetSubsystemName().ToString() : TEXT("null"),
-		SessionInterface.IsValid() ? TEXT("OK") : TEXT("null"),
-		IdentityInterface.IsValid() ? TEXT("OK") : TEXT("null"),
-		bUseDevAuthConfig ? 1 : 0,
-		*DevAuthToolAddressConfig);
+	SessionInterface = Subsystem->GetSessionInterface();
+	IdentityInterface = Subsystem->GetIdentityInterface();
+
+	UE_LOG(LogTemp, Warning, TEXT("EOSSessionGameInstance::Init - Subsystem=%s Session=%s Identity=%s"),
+		*Subsystem->GetSubsystemName().ToString(),
+		SessionInterface.IsValid() ? TEXT("OK") : TEXT("NULL"),
+		IdentityInterface.IsValid() ? TEXT("OK") : TEXT("NULL"));
 }
 
 void UEOSSessionGameInstance::Shutdown()
 {
-	ClearAllSessionDelegates();
-
-	if (IdentityInterface.IsValid() && OnLoginCompleteHandle.IsValid())
+	if (IdentityInterface.IsValid() && LoginCompleteHandle.IsValid())
 	{
-		IdentityInterface->ClearOnLoginCompleteDelegate_Handle(0, OnLoginCompleteHandle);
-		OnLoginCompleteHandle.Reset();
+		IdentityInterface->ClearOnLoginCompleteDelegate_Handle(LOCAL_USER_NUM, LoginCompleteHandle);
+		LoginCompleteHandle.Reset();
+	}
+
+	if (SessionInterface.IsValid())
+	{
+		if (FindSessionsCompleteHandle.IsValid())
+		{
+			SessionInterface->ClearOnFindSessionsCompleteDelegate_Handle(FindSessionsCompleteHandle);
+			FindSessionsCompleteHandle.Reset();
+		}
+		if (CreateSessionCompleteHandle.IsValid())
+		{
+			SessionInterface->ClearOnCreateSessionCompleteDelegate_Handle(CreateSessionCompleteHandle);
+			CreateSessionCompleteHandle.Reset();
+		}
+		if (DestroySessionCompleteHandle.IsValid())
+		{
+			SessionInterface->ClearOnDestroySessionCompleteDelegate_Handle(DestroySessionCompleteHandle);
+			DestroySessionCompleteHandle.Reset();
+		}
+		if (JoinSessionCompleteHandle.IsValid())
+		{
+			SessionInterface->ClearOnJoinSessionCompleteDelegate_Handle(JoinSessionCompleteHandle);
+			JoinSessionCompleteHandle.Reset();
+		}
 	}
 
 	Super::Shutdown();
 }
 
-void UEOSSessionGameInstance::ClearAllSessionDelegates()
+FString UEOSSessionGameInstance::GetDevAuthAddressFromConfig() const
 {
-	if (!SessionInterface.IsValid())
+	// Try several known keys/sections because UE/EOS plugin versions differ.
+	FString Addr;
+	FString Host;
+	int32 Port = 0;
+
+	auto PullFromSection = [&](const TCHAR* Section)
 	{
-		return;
+		if (!GConfig) { return; }
+
+		FString Tmp;
+		if (Addr.IsEmpty())
+		{
+			if (GConfig->GetString(Section, TEXT("DevAuthToolAddress"), Tmp, GEngineIni) && !Tmp.IsEmpty())
+			{
+				Addr = Tmp;
+			}
+			else if (GConfig->GetString(Section, TEXT("DevAuthToolEndpoint"), Tmp, GEngineIni) && !Tmp.IsEmpty())
+			{
+				Addr = Tmp;
+			}
+		}
+
+		if (Host.IsEmpty())
+		{
+			if (GConfig->GetString(Section, TEXT("DevAuthToolHost"), Tmp, GEngineIni) && !Tmp.IsEmpty())
+			{
+				Host = Tmp;
+			}
+			else if (GConfig->GetString(Section, TEXT("DevAuthToolIP"), Tmp, GEngineIni) && !Tmp.IsEmpty())
+			{
+				Host = Tmp;
+			}
+		}
+
+		if (Port <= 0)
+		{
+			int32 TmpPort = 0;
+			if (GConfig->GetInt(Section, TEXT("DevAuthToolPort"), TmpPort, GEngineIni) && TmpPort > 0)
+			{
+				Port = TmpPort;
+			}
+		}
+	};
+
+	PullFromSection(TEXT("OnlineSubsystemEOS"));
+	PullFromSection(TEXT("/Script/OnlineSubsystemEOS.EOSSettings"));
+
+	if (Addr.IsEmpty() && !Host.IsEmpty())
+	{
+		if (Port <= 0) { Port = 8081; }
+		Addr = FString::Printf(TEXT("%s:%d"), *Host, Port);
 	}
 
-	if (OnFindSessionsCompleteHandle.IsValid())
+	if (Addr.IsEmpty())
 	{
-		SessionInterface->ClearOnFindSessionsCompleteDelegate_Handle(OnFindSessionsCompleteHandle);
-		OnFindSessionsCompleteHandle.Reset();
+		Addr = TEXT("127.0.0.1:8081");
 	}
-	if (OnCreateSessionCompleteHandle.IsValid())
+
+	// Normalize (strip protocol/path, ensure host:port)
+	Addr.TrimStartAndEndInline();
+	Addr.ReplaceInline(TEXT("http://"), TEXT(""), ESearchCase::IgnoreCase);
+	Addr.ReplaceInline(TEXT("https://"), TEXT(""), ESearchCase::IgnoreCase);
+
+	int32 SlashIdx = INDEX_NONE;
+	if (Addr.FindChar(TEXT('/'), SlashIdx))
 	{
-		SessionInterface->ClearOnCreateSessionCompleteDelegate_Handle(OnCreateSessionCompleteHandle);
-		OnCreateSessionCompleteHandle.Reset();
+		Addr = Addr.Left(SlashIdx);
 	}
-	if (OnDestroySessionCompleteHandle.IsValid())
+
+	FString HostPart;
+	FString PortPart;
+	if (!Addr.Split(TEXT(":"), &HostPart, &PortPart))
 	{
-		SessionInterface->ClearOnDestroySessionCompleteDelegate_Handle(OnDestroySessionCompleteHandle);
-		OnDestroySessionCompleteHandle.Reset();
+		HostPart = Addr;
+		PortPart = TEXT("8081");
 	}
-	if (OnJoinSessionCompleteHandle.IsValid())
+
+	HostPart.TrimStartAndEndInline();
+	PortPart.TrimStartAndEndInline();
+
+	if (HostPart.IsEmpty())
 	{
-		SessionInterface->ClearOnJoinSessionCompleteDelegate_Handle(OnJoinSessionCompleteHandle);
-		OnJoinSessionCompleteHandle.Reset();
+		HostPart = TEXT("127.0.0.1");
 	}
+	if (HostPart.Equals(TEXT("localhost"), ESearchCase::IgnoreCase))
+	{
+		HostPart = TEXT("127.0.0.1");
+	}
+
+	const int32 ParsedPort = FCString::Atoi(*PortPart);
+	const int32 FinalPort = (ParsedPort > 0) ? ParsedPort : 8081;
+
+	return FString::Printf(TEXT("%s:%d"), *HostPart, FinalPort);
 }
-
-// ----------------------
-// Login
-// ----------------------
 
 bool UEOSSessionGameInstance::LoginPreferDevAuth(const FString& CredentialName)
 {
-	if (!IdentityInterface.IsValid())
-	{
-		if (IOnlineSubsystem* Subsystem = GetOSSForWorld(this))
-		{
-			IdentityInterface = Subsystem->GetIdentityInterface();
-		}
-	}
-
-	if (!IdentityInterface.IsValid())
-	{
-		UE_LOG(LogTemp, Error, TEXT("LoginPreferDevAuth: IdentityInterface invalid"));
-		return false;
-	}
-
-	const int32 LocalUserNum = 0;
-	const ELoginStatus::Type Status = IdentityInterface->GetLoginStatus(LocalUserNum);
-	if (Status == ELoginStatus::LoggedIn)
-	{
-		UE_LOG(LogTemp, Log, TEXT("LoginPreferDevAuth: already logged in"));
-		return true;
-	}
-
 	if (bLoginInProgress)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("LoginPreferDevAuth: login already in progress"));
 		return false;
 	}
 
-	PendingCredentialName = CredentialName;
+	IOnlineSubsystem* Subsystem = IOnlineSubsystem::Get(TEXT("EOS"));
+	if (!Subsystem)
+	{
+		UE_LOG(LogTemp, Error, TEXT("LoginPreferDevAuth: EOS subsystem not found"));
+		return false;
+	}
 
-	// Prefer DevAuth when configured. Only fallback to AccountPortal when the error looks like a connectivity/service issue.
-	bLoginFallbackAllowed = bUseDevAuthConfig;
+	// NOTE: avoid shadowing the class member 'IdentityInterface' (C4458 may be treated as error).
+	IOnlineIdentityPtr LocalIdentityInterface = Subsystem->GetIdentityInterface();
+	if (!LocalIdentityInterface.IsValid())
+	{
+		UE_LOG(LogTemp, Error, TEXT("LoginPreferDevAuth: Identity interface invalid"));
+		return false;
+	}
 
-	return bUseDevAuthConfig
-		? LoginWithDevAuth(true, CredentialName)
-		: LoginWithDevAuth(false, CredentialName);
+	if (LocalIdentityInterface->GetLoginStatus(0) == ELoginStatus::LoggedIn)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("LoginPreferDevAuth: already logged in"));
+		OnLoginStateChanged.Broadcast(true, TEXT(""));
+		return true;
+	}
+
+	const FString DevAuthAddr = GetDevAuthAddressFromConfig();
+	const bool bReachable = !DevAuthAddr.IsEmpty() && IsDevAuthToolReachable(DevAuthAddr);
+
+	UE_LOG(LogTemp, Warning, TEXT("LoginPreferDevAuth: DevAuthAddr=%s reachable=%d (will try DevAuth first)"),
+		*DevAuthAddr, bReachable ? 1 : 0);
+
+	return LoginWithDevAuth(true, CredentialName);
 }
 
-bool UEOSSessionGameInstance::LoginWithDevAuth_Legacy(const FString& CredentialName)
-{
-	// The UI button "Login as X" should do the preferred logic.
-	return LoginPreferDevAuth(CredentialName);
-}
 
 bool UEOSSessionGameInstance::LoginWithDevAuth(bool bDevAuthId, const FString& CredentialName)
 {
 	if (!IdentityInterface.IsValid())
 	{
-		UE_LOG(LogTemp, Error, TEXT("LoginWithDevAuth: IdentityInterface invalid"));
+		UE_LOG(LogTemp, Error, TEXT("Login: IdentityInterface invalid"));
 		return false;
 	}
 
 	if (bLoginInProgress)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("LoginWithDevAuth: login already in progress"));
+		UE_LOG(LogTemp, Warning, TEXT("Login: login already in progress"));
 		return false;
 	}
 
-	// Safety: if DevAuth is enabled in config, force DevAuth unless you explicitly want AccountPortal in code.
-	if (!bDevAuthId && bUseDevAuthConfig)
+	const ELoginStatus::Type Status = IdentityInterface->GetLoginStatus(LOCAL_USER_NUM);
+	if (Status == ELoginStatus::LoggedIn)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("LoginWithDevAuth: bDevAuthId=false while bUseDevAuth=true; forcing DevAuth"));
-		bDevAuthId = true;
-	}
-
-	const int32 LocalUserNum = 0;
-
-	if (IdentityInterface->GetLoginStatus(LocalUserNum) == ELoginStatus::LoggedIn)
-	{
-		UE_LOG(LogTemp, Log, TEXT("LoginWithDevAuth: already logged in"));
+		UE_LOG(LogTemp, Warning, TEXT("Login: already logged in"));
+		OnLoginStateChanged.Broadcast(true, TEXT(""));
 		return true;
 	}
 
-	if (bDevAuthId && CredentialName.IsEmpty())
+	if (!LoginCompleteHandle.IsValid())
 	{
-		UE_LOG(LogTemp, Error, TEXT("LoginWithDevAuth: DevAuth requires a non-empty CredentialName (DevAuthTool credential)"));
-		return false;
+		LoginCompleteHandle = IdentityInterface->AddOnLoginCompleteDelegate_Handle(
+			LOCAL_USER_NUM,
+			FOnLoginCompleteDelegate::CreateUObject(this, &UEOSSessionGameInstance::HandleLoginComplete)
+		);
 	}
 
-	FOnlineAccountCredentials Creds;
-	Creds.Type = bDevAuthId ? TEXT("developer") : TEXT("accountportal");
-	Creds.Id = bDevAuthId ? DevAuthToolAddressConfig : TEXT("");
-	Creds.Token = bDevAuthId ? CredentialName : TEXT("");
+	
+FOnlineAccountCredentials Creds;
+bLastAttemptWasDevAuth = bDevAuthId;
 
-	UE_LOG(LogTemp, Log, TEXT("LoginWithDevAuth: attempting %s Type=%s Id=%s Token=%s"),
-		bDevAuthId ? TEXT("DevAuth") : TEXT("AccountPortal"),
-		*Creds.Type,
-		bDevAuthId ? *Creds.Id : TEXT(""),
-		bDevAuthId ? *Creds.Token : TEXT(""));
+FString DevAuthAddr;
+bool bDevAuthReachable = false;
+if (bDevAuthId)
+{
+	DevAuthAddr = GetDevAuthAddressFromConfig();
+	bDevAuthReachable = !DevAuthAddr.IsEmpty() && IsDevAuthToolReachable(DevAuthAddr);
+	// Fallback to AccountPortal only if DevAuthTool is NOT reachable.
+	bFallbackAllowed = !bDevAuthReachable;
 
-	// Bind completion delegate.
-	if (OnLoginCompleteHandle.IsValid())
-	{
-		IdentityInterface->ClearOnLoginCompleteDelegate_Handle(LocalUserNum, OnLoginCompleteHandle);
-		OnLoginCompleteHandle.Reset();
+	Creds.Type = TEXT("developer");
+	Creds.Id = DevAuthAddr;
+	Creds.Token = CredentialName;
+
+	UE_LOG(LogTemp, Warning, TEXT("Login: attempting DevAuth Type=%s Id=%s Token=%s (reachable=%d fallbackAllowed=%d)"),
+		*Creds.Type, *Creds.Id, *Creds.Token, bDevAuthReachable ? 1 : 0, bFallbackAllowed ? 1 : 0);
+}
+else
+{
+	bFallbackAllowed = false;
+		Creds.Type = TEXT("accountportal");
+		Creds.Id = TEXT("");
+		Creds.Token = TEXT("");
+
+		UE_LOG(LogTemp, Warning, TEXT("Login: attempting AccountPortal Type=accountportal"));
 	}
 
-	OnLoginCompleteHandle = IdentityInterface->AddOnLoginCompleteDelegate_Handle(
-		LocalUserNum,
-		FOnLoginCompleteDelegate::CreateUObject(this, &UEOSSessionGameInstance::OnLoginComplete));
+	const bool bStarted = IdentityInterface->Login(LOCAL_USER_NUM, Creds);
+	bLoginInProgress = bStarted;
 
-	bLastAttemptWasDevAuth = bDevAuthId;
-	bLoginInProgress = true;
-
-	const bool bStarted = IdentityInterface->Login(LocalUserNum, Creds);
-	if (!bStarted)
+	// If DevAuth couldn't even start, allow immediate fallback to accountportal.
+	if (!bStarted && bDevAuthId && bFallbackAllowed)
 	{
-		UE_LOG(LogTemp, Error, TEXT("LoginWithDevAuth: IdentityInterface->Login returned false (login did not start)"));
 		bLoginInProgress = false;
-
-		IdentityInterface->ClearOnLoginCompleteDelegate_Handle(LocalUserNum, OnLoginCompleteHandle);
-		OnLoginCompleteHandle.Reset();
-		return false;
+		bFallbackAllowed = false;
+		UE_LOG(LogTemp, Warning, TEXT("Login: DevAuth could not start -> fallback AccountPortal"));
+		return LoginWithDevAuth(false, TEXT(""));
 	}
 
-	return true;
+	
+// If nothing started and we are not falling back, let UI know.
+if (!bStarted && !(bDevAuthId && bFallbackAllowed))
+{
+	OnLoginStateChanged.Broadcast(false, TEXT("Login request could not be started"));
 }
 
-void UEOSSessionGameInstance::OnLoginComplete(int32 LocalUserNum, bool bWasSuccessful, const FUniqueNetId& UserId, const FString& Error)
+	return bStarted;
+}
+
+void UEOSSessionGameInstance::HandleLoginComplete(int32 LocalUserNum, bool bWasSuccessful, const FUniqueNetId& UserId, const FString& Error)
 {
 	bLoginInProgress = false;
 
-	if (IdentityInterface.IsValid() && OnLoginCompleteHandle.IsValid())
-	{
-		IdentityInterface->ClearOnLoginCompleteDelegate_Handle(LocalUserNum, OnLoginCompleteHandle);
-		OnLoginCompleteHandle.Reset();
-	}
+	UE_LOG(LogTemp, Warning, TEXT("OnLoginComplete: user=%d success=%d id=%s error=%s"),
+		LocalUserNum, bWasSuccessful ? 1 : 0, *UserId.ToString(), *Error);
 
 	if (bWasSuccessful)
 	{
-		UE_LOG(LogTemp, Log, TEXT("OnLoginComplete: success=1 user=%s"), *UserId.ToString());
-		bLoginFallbackAllowed = false;
+		bFallbackAllowed = false;
+		OnLoginStateChanged.Broadcast(true, TEXT(""));
 		return;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("OnLoginComplete: success=0 error=%s (lastAttemptWasDevAuth=%d fallbackAllowed=%d)"), *Error, bLastAttemptWasDevAuth ? 1 : 0, bLoginFallbackAllowed ? 1 : 0);
-
-	// If DevAuth failed and fallback is allowed, attempt AccountPortal once (only for connectivity/service errors).
-	if (bLastAttemptWasDevAuth && bLoginFallbackAllowed)
+	// DevAuth failed: fallback to accountportal once.
+	if (bFallbackAllowed && bLastAttemptWasDevAuth)
 	{
-		bLoginFallbackAllowed = false;
-		if (ShouldFallbackToAccountPortalFromDevAuthError(Error))
-		{
-			UE_LOG(LogTemp, Warning, TEXT("OnLoginComplete: DevAuth failed with connectivity/service error; trying AccountPortal fallback. Error=%s"), *Error);
-			LoginWithDevAuth(false, PendingCredentialName);
-		}
-		else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("OnLoginComplete: DevAuth failed; not falling back automatically (likely bad DevAuthTool credential). Error=%s"), *Error);
-		}
+		bFallbackAllowed = false;
+		UE_LOG(LogTemp, Warning, TEXT("Login: DevAuth failed -> fallback AccountPortal (once)"));
+		LoginWithDevAuth(false, TEXT(""));
+		return;
 	}
-}
 
-// ----------------------
-// Sessions: Find
-// ----------------------
+	OnLoginStateChanged.Broadcast(false, Error);
+}
 
 void UEOSSessionGameInstance::FindSessions(int32 MaxResults)
 {
-	if (!SessionInterface.IsValid())
-	{
-		if (IOnlineSubsystem* Subsystem = GetOSSForWorld(this))
-		{
-			SessionInterface = Subsystem->GetSessionInterface();
-		}
-	}
-
 	if (!SessionInterface.IsValid())
 	{
 		UE_LOG(LogTemp, Error, TEXT("FindSessions: SessionInterface invalid"));
 		return;
 	}
 
-	if (OnFindSessionsCompleteHandle.IsValid())
+	if (!FindSessionsCompleteHandle.IsValid())
 	{
-		SessionInterface->ClearOnFindSessionsCompleteDelegate_Handle(OnFindSessionsCompleteHandle);
-		OnFindSessionsCompleteHandle.Reset();
+		FindSessionsCompleteHandle = SessionInterface->AddOnFindSessionsCompleteDelegate_Handle(
+			FOnFindSessionsCompleteDelegate::CreateUObject(this, &UEOSSessionGameInstance::HandleFindSessionsComplete)
+		);
 	}
 
 	SessionSearch = MakeShared<FOnlineSessionSearch>();
-	SessionSearch->MaxSearchResults = FMath::Clamp(MaxResults, 1, 5000);
+	SessionSearch->MaxSearchResults = MaxResults;
 	SessionSearch->bIsLanQuery = false;
 
-	// IMPORTANT: Do not set SEARCH_PRESENCE / SEARCH_LOBBIES (undefined in some UE/EOS versions).
-	// Keep the query unfiltered so we can see all advertised sessions.
+	// Restrict to our app tag to avoid stale sessions from other tests.
+	SessionSearch->QuerySettings.Set(KEY_APP_TAG, FString(TEXT("EOS_OSS_TUTORIAL")), EOnlineComparisonOp::Equals);
 
-	OnFindSessionsCompleteHandle = SessionInterface->AddOnFindSessionsCompleteDelegate_Handle(
-		FOnFindSessionsCompleteDelegate::CreateUObject(this, &UEOSSessionGameInstance::OnFindSessionsComplete));
-
-	UE_LOG(LogTemp, Log, TEXT("FindSessions: starting MaxResults=%d"), SessionSearch->MaxSearchResults);
-
-	const bool bStarted = SessionInterface->FindSessions(0, SessionSearch.ToSharedRef());
-	if (!bStarted)
-	{
-		UE_LOG(LogTemp, Error, TEXT("FindSessions: FindSessions returned false"));
-		SessionInterface->ClearOnFindSessionsCompleteDelegate_Handle(OnFindSessionsCompleteHandle);
-		OnFindSessionsCompleteHandle.Reset();
-		SessionSearch.Reset();
-	}
+	UE_LOG(LogTemp, Warning, TEXT("FindSessions: starting MaxResults=%d"), MaxResults);
+	const bool bStarted = SessionInterface->FindSessions(LOCAL_USER_NUM, SessionSearch.ToSharedRef());
+	UE_LOG(LogTemp, Warning, TEXT("FindSessions: started=%d"), bStarted ? 1 : 0);
 }
 
-void UEOSSessionGameInstance::OnFindSessionsComplete(bool bWasSuccessful)
+void UEOSSessionGameInstance::HandleFindSessionsComplete(bool bWasSuccessful)
 {
-	if (SessionInterface.IsValid() && OnFindSessionsCompleteHandle.IsValid())
-	{
-		SessionInterface->ClearOnFindSessionsCompleteDelegate_Handle(OnFindSessionsCompleteHandle);
-		OnFindSessionsCompleteHandle.Reset();
-	}
-
-	UE_LOG(LogTemp, Log, TEXT("OnFindSessionsComplete: success=%d results=%d"), bWasSuccessful ? 1 : 0,
-		SessionSearch.IsValid() ? SessionSearch->SearchResults.Num() : -1);
-
-	UpdateCachedItemsFromSearch();
+	BuildCachedItemsFromSearchResults(bWasSuccessful);
 	OnSessionsSearchUpdated.Broadcast(CachedItems.Num());
 }
 
-void UEOSSessionGameInstance::UpdateCachedItemsFromSearch()
+FString UEOSSessionGameInstance::GetSettingString(const FOnlineSessionSettings& Settings, const FName& Key, const FString& DefaultValue)
+{
+	const FOnlineSessionSetting* S = Settings.Settings.Find(Key);
+	return S ? S->Data.ToString() : DefaultValue;
+}
+
+int64 UEOSSessionGameInstance::GetSettingInt64(const FOnlineSessionSettings& Settings, const FName& Key, int64 DefaultValue)
+{
+	const FOnlineSessionSetting* S = Settings.Settings.Find(Key);
+	if (!S) return DefaultValue;
+
+	// Robust across UE/OSS versions: try numeric read first, then parse ToString().
+	int64 V = DefaultValue;
+	S->Data.GetValue(V);
+
+	// For our use (HOST_TS), DefaultValue is 0 and real timestamps are non-zero.
+	if (V != DefaultValue)
+	{
+		return V;
+	}
+
+	const FString AsString = S->Data.ToString();
+	if (AsString.IsEmpty())
+	{
+		return DefaultValue;
+	}
+
+	return FCString::Atoi64(*AsString);
+}
+
+void UEOSSessionGameInstance::BuildCachedItemsFromSearchResults(bool bWasSuccessful)
 {
 	CachedItems.Reset();
 
-	if (!SessionSearch.IsValid())
+	if (!bWasSuccessful || !SessionSearch.IsValid())
 	{
+		UE_LOG(LogTemp, Warning, TEXT("BuildCachedItemsFromSearchResults: no results (success=%d searchValid=%d)"),
+			bWasSuccessful ? 1 : 0, SessionSearch.IsValid() ? 1 : 0);
 		return;
 	}
 
-	for (int32 i = 0; i < SessionSearch->SearchResults.Num(); ++i)
+	const auto& Results = SessionSearch->SearchResults;
+	UE_LOG(LogTemp, Warning, TEXT("OnFindSessionsComplete: success=1 results=%d"), Results.Num());
+
+	// Best per (Host|Map) using HOST_TS to avoid showing stale duplicates.
+	TMap<FString, TObjectPtr<USessionRowData>> BestByKey;
+
+	for (int32 i = 0; i < Results.Num(); ++i)
 	{
-		const FOnlineSessionSearchResult& R = SessionSearch->SearchResults[i];
+		const FOnlineSessionSearchResult& R = Results[i];
+
+		const FString SessionIdStr = R.GetSessionIdStr();
+		const FString Host = R.Session.OwningUserName;
+		const FString Map = GetSettingString(R.Session.SessionSettings, KEY_MAPNAME, TEXT(""));
+		const int64 TS = GetSettingInt64(R.Session.SessionSettings, KEY_HOST_TS, 0);
+
+		const FString Key = Host + TEXT("|") + Map;
 
 		USessionRowData* Row = NewObject<USessionRowData>(this);
 		Row->SearchResultIndex = i;
-		Row->SessionId = R.GetSessionIdStr();
-		Row->SessionName = NAME_EOSGameSession.ToString();
-		if (const FOnlineSessionSetting* Setting = R.Session.SessionSettings.Settings.Find(KEY_DISPLAY_SESSION_NAME))
-		{
-			Row->SessionName = Setting->Data.ToString();
-		}
-		Row->HostName = R.Session.OwningUserName;
-		Row->OpenPublicSlots = R.Session.NumOpenPublicConnections;
-		Row->MaxPublicSlots = R.Session.SessionSettings.NumPublicConnections;
+		Row->SessionId = SessionIdStr;
+		Row->HostName = Host;
+		Row->MapName = Map;
+		Row->SessionName = GetSettingString(R.Session.SessionSettings, KEY_DISPLAY_NAME, TEXT(""));
+
 		Row->PingMs = R.PingInMs;
-		Row->OpenPrivateSlots = R.Session.NumOpenPrivateConnections;
 
-		Row->MaxPrivateSlots = R.Session.SessionSettings.NumPrivateConnections;
-		Row->bIsPrivate = !R.Session.SessionSettings.bShouldAdvertise;
-		// Map name
-		if (const FOnlineSessionSetting* Setting = R.Session.SessionSettings.Settings.Find(KEY_MAPNAME))
+		Row->MaxPlayers = R.Session.SessionSettings.NumPublicConnections;
+		Row->OpenPublicSlots = R.Session.NumOpenPublicConnections;
+		Row->CurrentPlayers = FMath::Max(0, Row->MaxPlayers - Row->OpenPublicSlots);
+		Row->bIsJoinable = (Row->SearchResultIndex != INDEX_NONE);
+
+		TObjectPtr<USessionRowData>* Existing = BestByKey.Find(Key);
+		if (!Existing)
 		{
-			Row->MapName = Setting->Data.ToString();
+			BestByKey.Add(Key, Row);
 		}
-		// Region / ruleset (custom keys)
-		if (const FOnlineSessionSetting* Setting = R.Session.SessionSettings.Settings.Find(KEY_REGION))
+		else
 		{
-			Row->Region = Setting->Data.ToString();
-		}
-		if (const FOnlineSessionSetting* Setting = R.Session.SessionSettings.Settings.Find(KEY_RULESET))
-		{
-			Row->RuleSet = Setting->Data.ToString();
+			// Keep the most recent by HOST_TS; if equal, keep lower ping.
+			const int64 OldTS = GetSettingInt64(Results[(*Existing)->SearchResultIndex].Session.SessionSettings, KEY_HOST_TS, 0);
+			if (TS > OldTS || (TS == OldTS && Row->PingMs < (*Existing)->PingMs))
+			{
+				BestByKey[Key] = Row;
+			}
 		}
 
-		CachedItems.Add(Row);
+		UE_LOG(LogTemp, Warning, TEXT("FindResult[%d] id=%s host=%s players=%d/%d open=%d ping=%d map=%s ts=%lld"),
+			i, *Row->SessionId, *Row->HostName, Row->CurrentPlayers, Row->MaxPlayers, Row->OpenPublicSlots, Row->PingMs, *Row->MapName, TS);
 	}
-}
 
-TArray<USessionRowData*> UEOSSessionGameInstance::GetSessionListItems() const
-{
-	TArray<USessionRowData*> Out;
-	Out.Reserve(CachedItems.Num());
-	for (const TObjectPtr<USessionRowData>& Item : CachedItems)
+	for (const auto& Pair : BestByKey)
 	{
-		Out.Add(Item.Get());
+		CachedItems.Add(Pair.Value);
 	}
-	return Out;
 }
 
-// ----------------------
-// Sessions: Host
-// ----------------------
-
-bool UEOSSessionGameInstance::HostSession_Legacy(int32 PlayersPerTeam, const FString& MapPath, bool bIsPrivate)
+bool UEOSSessionGameInstance::HostSession(int32 PlayersPerTeam, const FString& MapPath, bool bIsPrivate)
 {
-	return HostSession(NAME_EOSGameSession.ToString(), MapPath, TEXT(""), TEXT(""), bIsPrivate, PlayersPerTeam);
-}
-
-bool UEOSSessionGameInstance::HostSession(const FString& SessionName, const FString& MapName,
-                                         const FString& Region, const FString& RuleSet,
-                                         bool bIsPrivate, int32 PlayersPerTeam)
-{
-	if (!SessionInterface.IsValid())
-	{
-		if (IOnlineSubsystem* Subsystem = GetOSSForWorld(this))
-		{
-			SessionInterface = Subsystem->GetSessionInterface();
-		}
-	}
-
 	if (!SessionInterface.IsValid())
 	{
 		UE_LOG(LogTemp, Error, TEXT("HostSession: SessionInterface invalid"));
 		return false;
 	}
 
-	const FName Name = NAME_EOSGameSession;
-	const int32 MaxPlayers = FMath::Clamp(PlayersPerTeam, 1, 128);
+	PendingHostMap = MapPath;
 
-	FOnlineSessionSettings Settings;
-	Settings.bIsLANMatch = false;
-	Settings.bUsesPresence = false;
-	Settings.bAllowJoinInProgress = true;
-	Settings.bAllowJoinViaPresence = false;
-	Settings.bAllowInvites = true;
-	Settings.bShouldAdvertise = !bIsPrivate;
-	Settings.bUseLobbiesIfAvailable = false;
-	Settings.NumPublicConnections = bIsPrivate ? 0 : MaxPlayers;
-	Settings.NumPrivateConnections = bIsPrivate ? MaxPlayers : 0;
+	FOnlineSessionSettings S;
+	S.bIsLANMatch = false;
+	S.bShouldAdvertise = !bIsPrivate;
+	S.bAllowJoinInProgress = true;
+	S.bUsesPresence = false;
+	S.bAllowJoinViaPresence = false;
+	S.bUseLobbiesIfAvailable = false;
 
-	Settings.Set(KEY_MAPNAME, MapName, EOnlineDataAdvertisementType::ViaOnlineService);
-	const FString DisplaySessionName = SessionName.IsEmpty() ? NAME_EOSGameSession.ToString() : SessionName;
-	Settings.Set(KEY_DISPLAY_SESSION_NAME, DisplaySessionName, EOnlineDataAdvertisementType::ViaOnlineService);
-	if (!Region.IsEmpty())
-	{
-		Settings.Set(KEY_REGION, Region, EOnlineDataAdvertisementType::ViaOnlineService);
-	}
-	if (!RuleSet.IsEmpty())
-	{
-		Settings.Set(KEY_RULESET, RuleSet, EOnlineDataAdvertisementType::ViaOnlineService);
-	}
+	S.NumPublicConnections = PlayersPerTeam;
+	S.NumPrivateConnections = 0;
+	S.bIsDedicated = false;
 
-	const FString ListenTravelUrl = FString::Printf(TEXT("%s?listen"), *MapName);
-	return StartCreateSessionInternal(Name, Settings, ListenTravelUrl);
+	S.Set(KEY_APP_TAG, FString(TEXT("EOS_OSS_TUTORIAL")), EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
+	S.Set(KEY_MAPNAME, MapPath, EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
+	S.Set(KEY_DISPLAY_NAME, bIsPrivate ? FString(TEXT("Private")) : FString(TEXT("Public")), EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
+	S.Set(KEY_HOST_TS, FString::Printf(TEXT("%lld"), (long long)FDateTime::UtcNow().ToUnixTimestamp()), EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
+
+	UE_LOG(LogTemp, Warning, TEXT("HostSession: CreateSession map=%s public=%d private=%d"), *MapPath, S.NumPublicConnections, bIsPrivate ? 1 : 0);
+
+	return DestroySessionIfExistsThenCreate(S);
 }
 
-bool UEOSSessionGameInstance::StartCreateSessionInternal(const FName SessionName, const FOnlineSessionSettings& Settings, const FString& ListenTravelUrl)
+bool UEOSSessionGameInstance::DestroySessionIfExistsThenCreate(const FOnlineSessionSettings& Settings)
 {
 	if (!SessionInterface.IsValid())
 	{
-		UE_LOG(LogTemp, Error, TEXT("StartCreateSessionInternal: SessionInterface invalid"));
 		return false;
 	}
 
-	// If a session exists already, destroy it first and then create.
-	if (SessionInterface->GetNamedSession(SessionName) != nullptr)
+	if (SessionInterface->GetNamedSession(GAME_SESSION_NAME) == nullptr)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("HostSession: session '%s' already exists -> DestroySession then CreateSession"), *SessionName.ToString());
-		PendingHostSessionName = SessionName;
-		PendingHostSettings = MakeUnique<FOnlineSessionSettings>(Settings);
-		PendingListenTravelUrl = ListenTravelUrl;
-		bCreateAfterDestroy = true;
-		StartDestroyThenCreate(SessionName);
-		return true;
+		return StartCreateSessionInternal(Settings);
 	}
 
-	// Bind create delegate.
-	if (OnCreateSessionCompleteHandle.IsValid())
+	if (!DestroySessionCompleteHandle.IsValid())
 	{
-		SessionInterface->ClearOnCreateSessionCompleteDelegate_Handle(OnCreateSessionCompleteHandle);
-		OnCreateSessionCompleteHandle.Reset();
-	}
-	OnCreateSessionCompleteHandle = SessionInterface->AddOnCreateSessionCompleteDelegate_Handle(
-		FOnCreateSessionCompleteDelegate::CreateUObject(this, &UEOSSessionGameInstance::OnCreateSessionComplete));
-
-	PendingListenTravelUrl = ListenTravelUrl;
-
-	UE_LOG(LogTemp, Log, TEXT("HostSession: CreateSession name=%s map=%s public=%d private=%d advertise=%d"),
-		*SessionName.ToString(), *ListenTravelUrl,
-		Settings.NumPublicConnections, Settings.NumPrivateConnections,
-		Settings.bShouldAdvertise ? 1 : 0);
-
-	const bool bStarted = SessionInterface->CreateSession(0, SessionName, Settings);
-	UE_LOG(LogTemp, Log, TEXT("HostSession: CreateSession started=%d"), bStarted ? 1 : 0);
-
-	if (!bStarted)
-	{
-		SessionInterface->ClearOnCreateSessionCompleteDelegate_Handle(OnCreateSessionCompleteHandle);
-		OnCreateSessionCompleteHandle.Reset();
-		return false;
+		DestroySessionCompleteHandle = SessionInterface->AddOnDestroySessionCompleteDelegate_Handle(
+			FOnDestroySessionCompleteDelegate::CreateUObject(this, &UEOSSessionGameInstance::HandleDestroySessionComplete)
+		);
 	}
 
-	return true;
+	bRehostPending = true;
+	PendingHostSettings = Settings;
+
+	UE_LOG(LogTemp, Warning, TEXT("HostSession: GameSession exists -> DestroySession then recreate"));
+	const bool bDestroyStarted = SessionInterface->DestroySession(GAME_SESSION_NAME);
+	UE_LOG(LogTemp, Warning, TEXT("HostSession: DestroySession started=%d"), bDestroyStarted ? 1 : 0);
+	return bDestroyStarted;
 }
 
-void UEOSSessionGameInstance::StartDestroyThenCreate(const FName SessionName)
+bool UEOSSessionGameInstance::StartCreateSessionInternal(const FOnlineSessionSettings& Settings)
 {
-	if (!SessionInterface.IsValid())
+	if (!CreateSessionCompleteHandle.IsValid())
 	{
-		UE_LOG(LogTemp, Error, TEXT("StartDestroyThenCreate: SessionInterface invalid"));
-		bCreateAfterDestroy = false;
-		PendingHostSettings.Reset();
-		return;
+		CreateSessionCompleteHandle = SessionInterface->AddOnCreateSessionCompleteDelegate_Handle(
+			FOnCreateSessionCompleteDelegate::CreateUObject(this, &UEOSSessionGameInstance::HandleCreateSessionComplete)
+		);
 	}
 
-	if (OnDestroySessionCompleteHandle.IsValid())
-	{
-		SessionInterface->ClearOnDestroySessionCompleteDelegate_Handle(OnDestroySessionCompleteHandle);
-		OnDestroySessionCompleteHandle.Reset();
-	}
-	OnDestroySessionCompleteHandle = SessionInterface->AddOnDestroySessionCompleteDelegate_Handle(
-		FOnDestroySessionCompleteDelegate::CreateUObject(this, &UEOSSessionGameInstance::OnDestroySessionComplete));
+	const bool bStarted = SessionInterface->CreateSession(LOCAL_USER_NUM, GAME_SESSION_NAME, Settings);
+	UE_LOG(LogTemp, Warning, TEXT("HostSession: CreateSession started=%d"), bStarted ? 1 : 0);
+	return bStarted;
+}
 
-	const bool bStarted = SessionInterface->DestroySession(SessionName);
-	UE_LOG(LogTemp, Log, TEXT("HostSession: DestroySession(%s) started=%d"), *SessionName.ToString(), bStarted ? 1 : 0);
+void UEOSSessionGameInstance::HandleDestroySessionComplete(FName SessionName, bool bWasSuccessful)
+{
+	UE_LOG(LogTemp, Warning, TEXT("OnDestroySessionComplete: name=%s success=%d"), *SessionName.ToString(), bWasSuccessful ? 1 : 0);
 
-	if (!bStarted)
+	if (bRehostPending)
 	{
-		SessionInterface->ClearOnDestroySessionCompleteDelegate_Handle(OnDestroySessionCompleteHandle);
-		OnDestroySessionCompleteHandle.Reset();
-		bCreateAfterDestroy = false;
-		PendingHostSettings.Reset();
+		bRehostPending = false;
+		UE_LOG(LogTemp, Warning, TEXT("HostSession: recreating after destroy"));
+		StartCreateSessionInternal(PendingHostSettings);
 	}
 }
 
-void UEOSSessionGameInstance::OnDestroySessionComplete(FName SessionName, bool bWasSuccessful)
+void UEOSSessionGameInstance::HandleCreateSessionComplete(FName SessionName, bool bWasSuccessful)
 {
-	if (SessionInterface.IsValid() && OnDestroySessionCompleteHandle.IsValid())
-	{
-		SessionInterface->ClearOnDestroySessionCompleteDelegate_Handle(OnDestroySessionCompleteHandle);
-		OnDestroySessionCompleteHandle.Reset();
-	}
-
-	UE_LOG(LogTemp, Log, TEXT("OnDestroySessionComplete: name=%s success=%d"), *SessionName.ToString(), bWasSuccessful ? 1 : 0);
-
-	if (bCreateAfterDestroy && PendingHostSettings.IsValid())
-	{
-		bCreateAfterDestroy = false;
-		// Copy settings now, then clear pending to avoid re-entrancy issues.
-		const FOnlineSessionSettings SettingsCopy = *PendingHostSettings;
-		const FString TravelUrlCopy = PendingListenTravelUrl;
-		PendingHostSettings.Reset();
-		PendingListenTravelUrl.Reset();
-
-		StartCreateSessionInternal(SessionName, SettingsCopy, TravelUrlCopy);
-		return;
-	}
-
-	bCreateAfterDestroy = false;
-	PendingHostSettings.Reset();
-	PendingListenTravelUrl.Reset();
-}
-
-void UEOSSessionGameInstance::OnCreateSessionComplete(FName SessionName, bool bWasSuccessful)
-{
-	if (SessionInterface.IsValid() && OnCreateSessionCompleteHandle.IsValid())
-	{
-		SessionInterface->ClearOnCreateSessionCompleteDelegate_Handle(OnCreateSessionCompleteHandle);
-		OnCreateSessionCompleteHandle.Reset();
-	}
-
-	UE_LOG(LogTemp, Log, TEXT("OnCreateSessionComplete: name=%s success=%d"), *SessionName.ToString(), bWasSuccessful ? 1 : 0);
+	UE_LOG(LogTemp, Warning, TEXT("OnCreateSessionComplete: name=%s success=%d"), *SessionName.ToString(), bWasSuccessful ? 1 : 0);
 
 	if (!bWasSuccessful)
 	{
@@ -583,51 +604,10 @@ void UEOSSessionGameInstance::OnCreateSessionComplete(FName SessionName, bool bW
 		return;
 	}
 
-	UWorld* World = GetWorld();
-	if (!World)
+	if (UWorld* World = GetWorld())
 	{
-		UE_LOG(LogTemp, Error, TEXT("OnCreateSessionComplete: GetWorld() null"));
-		return;
-	}
-
-	UE_LOG(LogTemp, Log, TEXT("Listen travel: %s"), *PendingListenTravelUrl);
-	World->ServerTravel(PendingListenTravelUrl);
-}
-
-// ----------------------
-// Sessions: Join
-// ----------------------
-
-void UEOSSessionGameInstance::JoinSessionByIndex(int32 SearchResultIndex)
-{
-	if (!SessionInterface.IsValid() || !SessionSearch.IsValid())
-	{
-		UE_LOG(LogTemp, Error, TEXT("JoinSessionByIndex: invalid interfaces/search"));
-		return;
-	}
-
-	if (!SessionSearch->SearchResults.IsValidIndex(SearchResultIndex))
-	{
-		UE_LOG(LogTemp, Warning, TEXT("JoinSessionByIndex: invalid index=%d (num=%d)"), SearchResultIndex, SessionSearch->SearchResults.Num());
-		return;
-	}
-
-	if (OnJoinSessionCompleteHandle.IsValid())
-	{
-		SessionInterface->ClearOnJoinSessionCompleteDelegate_Handle(OnJoinSessionCompleteHandle);
-		OnJoinSessionCompleteHandle.Reset();
-	}
-	OnJoinSessionCompleteHandle = SessionInterface->AddOnJoinSessionCompleteDelegate_Handle(
-		FOnJoinSessionCompleteDelegate::CreateUObject(this, &UEOSSessionGameInstance::OnJoinSessionComplete));
-
-	const FOnlineSessionSearchResult& Result = SessionSearch->SearchResults[SearchResultIndex];
-	const bool bStarted = SessionInterface->JoinSession(0, NAME_EOSGameSession, Result);
-	UE_LOG(LogTemp, Log, TEXT("JoinSession: started=%d index=%d sessionId=%s"), bStarted ? 1 : 0, SearchResultIndex, *Result.GetSessionIdStr());
-
-	if (!bStarted)
-	{
-		SessionInterface->ClearOnJoinSessionCompleteDelegate_Handle(OnJoinSessionCompleteHandle);
-		OnJoinSessionCompleteHandle.Reset();
+		UE_LOG(LogTemp, Warning, TEXT("HostSession: Opening level as listen: %s ?listen"), *PendingHostMap);
+		UGameplayStatics::OpenLevel(World, FName(*PendingHostMap), true, TEXT("listen"));
 	}
 }
 
@@ -635,48 +615,76 @@ void UEOSSessionGameInstance::JoinSessionByItem(USessionRowData* Item)
 {
 	if (!Item)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("JoinSessionByItem: Item null"));
 		return;
 	}
 	JoinSessionByIndex(Item->SearchResultIndex);
 }
 
-void UEOSSessionGameInstance::OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result)
+void UEOSSessionGameInstance::JoinSessionByIndex(int32 SearchResultIndex)
 {
-	if (SessionInterface.IsValid() && OnJoinSessionCompleteHandle.IsValid())
+	if (!SessionInterface.IsValid() || !SessionSearch.IsValid())
 	{
-		SessionInterface->ClearOnJoinSessionCompleteDelegate_Handle(OnJoinSessionCompleteHandle);
-		OnJoinSessionCompleteHandle.Reset();
-	}
-
-	UE_LOG(LogTemp, Log, TEXT("OnJoinSessionComplete: name=%s result=%d"), *SessionName.ToString(), int32(Result));
-
-	if (Result != EOnJoinSessionCompleteResult::Success)
-	{
-		UE_LOG(LogTemp, Error, TEXT("JoinSession failed (result=%d)"), int32(Result));
+		UE_LOG(LogTemp, Error, TEXT("JoinSessionByIndex: invalid session interface/search"));
 		return;
 	}
 
-	FString ConnectString;
-	if (!SessionInterface.IsValid() || !SessionInterface->GetResolvedConnectString(SessionName, ConnectString))
+	if (!SessionSearch->SearchResults.IsValidIndex(SearchResultIndex))
 	{
-		UE_LOG(LogTemp, Error, TEXT("OnJoinSessionComplete: GetResolvedConnectString failed"));
+		UE_LOG(LogTemp, Error, TEXT("JoinSessionByIndex: invalid index %d"), SearchResultIndex);
 		return;
 	}
 
-	APlayerController* PC = GetFirstLocalPlayerController();
-	if (!PC)
+	if (SessionInterface->GetNamedSession(GAME_SESSION_NAME) != nullptr)
 	{
-		UE_LOG(LogTemp, Error, TEXT("OnJoinSessionComplete: no local PlayerController"));
-		return;
+		UE_LOG(LogTemp, Warning, TEXT("JoinSessionByIndex: local GameSession exists -> DestroySession first"));
+		SessionInterface->DestroySession(GAME_SESSION_NAME);
 	}
 
-	UE_LOG(LogTemp, Log, TEXT("ClientTravel to %s"), *ConnectString);
-	PC->ClientTravel(ConnectString, TRAVEL_Absolute);
+	if (!JoinSessionCompleteHandle.IsValid())
+	{
+		JoinSessionCompleteHandle = SessionInterface->AddOnJoinSessionCompleteDelegate_Handle(
+			FOnJoinSessionCompleteDelegate::CreateUObject(this, &UEOSSessionGameInstance::HandleJoinSessionComplete)
+		);
+	}
+
+	const bool bStarted = SessionInterface->JoinSession(LOCAL_USER_NUM, GAME_SESSION_NAME, SessionSearch->SearchResults[SearchResultIndex]);
+	UE_LOG(LogTemp, Warning, TEXT("JoinSessionByIndex: JoinSession started=%d index=%d"), bStarted ? 1 : 0, SearchResultIndex);
 }
 
-// ----------------------
-// Misc
-// ----------------------
+void UEOSSessionGameInstance::HandleJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result)
+{
+	UE_LOG(LogTemp, Warning, TEXT("OnJoinSessionComplete: name=%s result=%d"), *SessionName.ToString(), (int32)Result);
+
+	FString ConnectString;
+	if (SessionInterface.IsValid() && SessionInterface->GetResolvedConnectString(SessionName, ConnectString))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("GetResolvedConnectString: %s"), *ConnectString);
+
+		if (UWorld* World = GetWorld())
+		{
+			if (APlayerController* PC = UGameplayStatics::GetPlayerController(World, 0))
+			{
+				PC->ClientTravel(ConnectString, ETravelType::TRAVEL_Absolute);
+			}
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("GetResolvedConnectString failed"));
+	}
+}
+
+TArray<USessionRowData*> UEOSSessionGameInstance::GetSessionListItems() const
+{
+	TArray<USessionRowData*> Result;
+	Result.Reserve(CachedItems.Num());
+	for (const TObjectPtr<USessionRowData>& Item : CachedItems)
+	{
+		Result.Add(Item.Get());
+	}
+	return Result;
+}
 
 FString UEOSSessionGameInstance::GameModeToString(EMatchGameMode Mode) const
 {
@@ -687,7 +695,8 @@ FString UEOSSessionGameInstance::GameModeToString(EMatchGameMode Mode) const
 	case EMatchGameMode::GM_TeamDeathMatch:
 		return TEXT("TeamDeathMatch");
 	case EMatchGameMode::Default:
-	default:
 		return TEXT("Default");
+	default:
+		return TEXT("Unknown");
 	}
 }

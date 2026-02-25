@@ -1,29 +1,33 @@
 #pragma once
+// FIX_V28_MARKER
 
 #include "CoreMinimal.h"
+#include "CoreUObject.h"
+#include "UObject/NoExportTypes.h"
+#include "UObject/ObjectMacros.h"
+#include "UObject/ScriptMacros.h"
+
 #include "Engine/GameInstance.h"
-
-// Delegate macros (DECLARE_DYNAMIC_*).
-#include "Delegates/DelegateCombinations.h"
-
-// Online types & constants (FOnlineSessionSettings, SETTING_MAPNAME, EOnJoinSessionCompleteResult, ...).
-#include "OnlineSessionSettings.h"
 #include "Interfaces/OnlineSessionInterface.h"
 #include "Interfaces/OnlineIdentityInterface.h"
-
-#include "SessionRowData.h"
+#include "OnlineSessionSettings.h"
 
 #include "EOSSessionGameInstance.generated.h"
+
+class USessionRowData;
 
 UENUM(BlueprintType)
 enum class EMatchGameMode : uint8
 {
-	Default UMETA(DisplayName = "Default"),
-	GM_FreeForAll UMETA(DisplayName = "Free For All"),
-	GM_TeamDeathMatch UMETA(DisplayName = "Team DeathMatch"),
+	Unknown UMETA(DisplayName="Unknown"),
+	Default UMETA(DisplayName="Default"),
+	GM_FreeForAll UMETA(DisplayName="FreeForAll"),
+	GM_TeamDeathMatch UMETA(DisplayName="TeamDeathMatch"),
 };
 
+// Blueprint delegates (Event Dispatchers)
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSessionsSearchUpdated, int32, EffectiveCount);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnLoginStateChanged, bool, bSuccess, const FString&, Error);
 
 UCLASS()
 class EOS_OSS_TUTORIAL_API UEOSSessionGameInstance : public UGameInstance
@@ -31,93 +35,88 @@ class EOS_OSS_TUTORIAL_API UEOSSessionGameInstance : public UGameInstance
 	GENERATED_BODY()
 
 public:
-	UEOSSessionGameInstance();
+	// Blueprint Event Dispatchers
+	UPROPERTY(BlueprintAssignable, Category="EOS|Sessions")
+	FOnSessionsSearchUpdated OnSessionsSearchUpdated;
 
+	UPROPERTY(BlueprintAssignable, Category="EOS|Auth")
+	FOnLoginStateChanged OnLoginStateChanged;
+
+public:
 	virtual void Init() override;
 	virtual void Shutdown() override;
 
-	UPROPERTY(BlueprintAssignable, Category = "EOS|Sessions")
-	FOnSessionsSearchUpdated OnSessionsSearchUpdated;
-
-	UFUNCTION(BlueprintCallable, Category = "EOS|Sessions")
-	void FindSessions(int32 MaxResults);
-
-	UFUNCTION(BlueprintCallable, Category = "EOS|Sessions")
-	bool HostSession(const FString& SessionName, const FString& MapName,
-	                 const FString& Region, const FString& RuleSet,
-	                 bool bIsPrivate, int32 PlayersPerTeam);
-
-	// Legacy UI call: HostSession_Legacy(PlayersPerTeam, MapPath, bIsPrivate)
-	UFUNCTION(BlueprintCallable, Category = "EOS|Sessions")
-	bool HostSession_Legacy(int32 PlayersPerTeam, const FString& MapPath, bool bIsPrivate);
-
-	UFUNCTION(BlueprintCallable, Category = "EOS|Sessions")
-	void JoinSessionByIndex(int32 SearchResultIndex);
-
-	UFUNCTION(BlueprintCallable, Category = "EOS|Sessions")
-	void JoinSessionByItem(USessionRowData* Item);
-
-	UFUNCTION(BlueprintCallable, Category = "EOS|Sessions")
-	TArray<USessionRowData*> GetSessionListItems() const;
-
-	UFUNCTION(BlueprintPure, Category = "EOS|Misc")
-	FString GameModeToString(EMatchGameMode Mode) const;
-
-	// Preferred flow: DevAuth if it succeeds, otherwise fallback to AccountPortal.
-	UFUNCTION(BlueprintCallable, Category = "EOS|Login")
+	// Login: prefer DevAuthTool if possible; fallback accountportal if DevAuth fails to start or fails.
+	UFUNCTION(BlueprintCallable, Category="EOS|Auth")
 	bool LoginPreferDevAuth(const FString& CredentialName);
 
-	// Direct login attempt. bDevAuthId=true => Type="developer" Id="127.0.0.1:8081" Token=CredentialName
-	// bDevAuthId=false => Type="accountportal" (interactive)
-	UFUNCTION(BlueprintCallable, Category = "EOS|Login")
+	// Advanced explicit login.
+	UFUNCTION(BlueprintCallable, Category="EOS|Auth")
 	bool LoginWithDevAuth(bool bDevAuthId, const FString& CredentialName);
 
-	// Legacy UI call: LoginWithDevAuth_Legacy("Renaud")
-	UFUNCTION(BlueprintCallable, Category = "EOS|Login")
-	bool LoginWithDevAuth_Legacy(const FString& CredentialName);
+	// Sessions
+	UFUNCTION(BlueprintCallable, Category="EOS|Sessions")
+	void FindSessions(int32 MaxResults = 2000);
 
-protected:
-	void UpdateCachedItemsFromSearch();
+	UFUNCTION(BlueprintCallable, Category="EOS|Sessions")
+	bool HostSession(int32 PlayersPerTeam, const FString& MapPath, bool bIsPrivate);
 
-	// Kept non-private so generated code can always compute offsets without access issues.
-	UPROPERTY(Transient)
+	UFUNCTION(BlueprintCallable, Category="EOS|Sessions")
+	void JoinSessionByIndex(int32 SearchResultIndex);
+
+	UFUNCTION(BlueprintCallable, Category="EOS|Sessions")
+	void JoinSessionByItem(USessionRowData* Item);
+
+	UFUNCTION(BlueprintCallable, Category="EOS|Sessions")
+	TArray<USessionRowData*> GetSessionListItems() const;
+
+	UFUNCTION(BlueprintPure, Category="EOS|Misc")
+	FString GameModeToString(EMatchGameMode Mode) const;
+
+public:
+	UPROPERTY()
 	TArray<TObjectPtr<USessionRowData>> CachedItems;
-
-	bool StartCreateSessionInternal(const FName SessionName, const FOnlineSessionSettings& Settings, const FString& ListenTravelUrl);
-	void StartDestroyThenCreate(const FName SessionName);
-	void ClearAllSessionDelegates();
 
 private:
 	IOnlineSessionPtr SessionInterface;
 	IOnlineIdentityPtr IdentityInterface;
-
-
-	// Cached from [OnlineSubsystemEOS] in DefaultEngine.ini
-	bool bUseDevAuthConfig = false;
-	FString DevAuthToolAddressConfig = TEXT("127.0.0.1:8081");
 	TSharedPtr<FOnlineSessionSearch> SessionSearch;
-	FDelegateHandle OnFindSessionsCompleteHandle;
-	FDelegateHandle OnCreateSessionCompleteHandle;
-	FDelegateHandle OnDestroySessionCompleteHandle;
-	FDelegateHandle OnJoinSessionCompleteHandle;
 
-	// ---- Login flow state ----
+	FDelegateHandle FindSessionsCompleteHandle;
+	FDelegateHandle CreateSessionCompleteHandle;
+	FDelegateHandle DestroySessionCompleteHandle;
+	FDelegateHandle JoinSessionCompleteHandle;
+	FDelegateHandle LoginCompleteHandle;
+
+	bool bRehostPending = false;
+	FOnlineSessionSettings PendingHostSettings;
+	FString PendingHostMap;
+
 	bool bLoginInProgress = false;
-	bool bLoginFallbackAllowed = false;
 	bool bLastAttemptWasDevAuth = false;
-	FString PendingCredentialName;
-	FDelegateHandle OnLoginCompleteHandle;
+	bool bFallbackAllowed = false;
 
-	// ---- Host retry (Destroy -> Create) ----
-	bool bCreateAfterDestroy = false;
-	FName PendingHostSessionName;
-	TUniquePtr<FOnlineSessionSettings> PendingHostSettings;
-	FString PendingListenTravelUrl;
+	static constexpr int32 LOCAL_USER_NUM = 0;
 
-	// ---- Callbacks ----
-	void OnLoginComplete(int32 LocalUserNum, bool bWasSuccessful, const FUniqueNetId& UserId, const FString& Error);
-	void OnFindSessionsComplete(bool bWasSuccessful);
-	void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful);
-	void OnDestroySessionComplete(FName SessionName, bool bWasSuccessful);
-	void OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result);
+	static const FName GAME_SESSION_NAME;
+	static const FName KEY_APP_TAG;
+	static const FName KEY_MAPNAME;
+	static const FName KEY_DISPLAY_NAME;
+	static const FName KEY_HOST_TS;
+
+	FString GetDevAuthAddressFromConfig() const;
+
+	void HandleLoginComplete(int32 LocalUserNum, bool bWasSuccessful, const FUniqueNetId& UserId, const FString& Error);
+	void HandleFindSessionsComplete(bool bWasSuccessful);
+	void HandleDestroySessionComplete(FName SessionName, bool bWasSuccessful);
+	void HandleCreateSessionComplete(FName SessionName, bool bWasSuccessful);
+	void HandleJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result);
+
+	void BuildCachedItemsFromSearchResults(bool bWasSuccessful);
+
+	bool DestroySessionIfExistsThenCreate(const FOnlineSessionSettings& Settings);
+	bool StartCreateSessionInternal(const FOnlineSessionSettings& Settings);
+
+	static FString GetSettingString(const FOnlineSessionSettings& Settings, const FName& Key, const FString& DefaultValue);
+	static int64 GetSettingInt64(const FOnlineSessionSettings& Settings, const FName& Key, int64 DefaultValue);
 };
